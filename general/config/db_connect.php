@@ -1,6 +1,6 @@
 <?php 
 	//connect to database
-	$conn = mysqli_connect('localhost','pnamkoong','1234','order tracker');
+	$conn = mysqli_connect('localhost','root','','order_tracker');
 
 	//check connection
 	if(!$conn){

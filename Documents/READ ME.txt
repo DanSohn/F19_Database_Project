@@ -1,0 +1,113 @@
+
+
+Order_Table:
+    OrderNumber - 6 digit integer value (PK)
+    Cost        - integer value
+    Quantity    - 3 digit integer value
+    Created Date- Date value, default wise set to current date
+    M_SIN       - 9 digit integer value
+    OrderStatus - Status of order (ENUM : Order Created, Collected Supplies, Preparing Artwork, Artwork Complete, In Preparation, Complete)
+    
+    
+Person_Table:
+    SIN - 9 digit integer value (PK)
+    FName - 255 char varchar
+    MName - 255 char varchar
+    LName - 255 char varchar
+    PhoneNumber
+    Email - 255 char varchar (UNIQUE)
+    Address - 255 char varchar
+    City - 255 char varchar
+    PostalCode - 255 char varchar
+    Password - 255 char varchar
+    PersonType - Type of Person: ENUM (Client, Worker)
+    
+    
+Client_Table:
+    SIN - 9 digit integer value (PK)
+    M_SIN - 9 digit integer value
+    
+Worker_Table:
+    SIN - 9 digit integer value (PK)
+    WorkerType - Type of Person: ENUM (Manager, Employee, Designer)
+    
+Manager_Table:
+    SIN - 9 digit integer value (PK)
+    
+Employee_Table:
+    SIN - 9 digit integer value (PK)
+
+Supplier_Table:
+    Name - 255 char varchar (PK)
+    Location - 255 char varchar
+    
+Supply_Table:
+    SupplierName - 255 char varchar (PK)
+    Brand - 255 char varchar
+    Type - 255 char varchar
+    Cost - 255 char varchar
+    Size - 255 char varchar
+    Color - 255 char varchar
+    Durability - 255 char varchar
+    M_SIN - 9 digit integer value
+    
+Collects_From_Table:
+    SupplierName - 255 char varchar (PK)
+    E_SIN - 9 digit integer value(PK)
+    
+Installation_Table:
+    E_SIN - 9 digit integer value (PK)
+    Location - 255 char varchar (PK)
+    Substrate - 255 char varchar (PK)
+    Status - 255 char varchar (PK)
+    OrderNumber - 6 digit integer value
+    
+    
+Prepares_Table:
+    E_SIN - 9 digit integer value (PK)
+    OrderNumber - 6 digit integer value
+    
+Designer_Table:
+    SIN - 9 digit integer value (PK)
+    Experience - 255 char varchar (PK)
+    
+Designer_Specialization_Table:
+    D_SIN - 9 digit integer value (PK)
+    DSpecialization - 255 char varchar (PK)
+    
+Artwork_Table:
+    D_SIN - 9 digit integer value (PK)
+    Size - 255 char varchar
+    Color - 255 char varchar
+    Format - 255 char varchar
+    OrderNumber - 6 digit integer value
+    
+Invoice_Table:
+    InvoiceNumber - 6 digit integer value (PK)
+    Date - 255 char varchar
+    Cost - 255 char varchar
+    Status - 255 char varchar
+    C_SIN - 9 digit integer value
+    OrderNumber - 6 digit integer value
+    
+    
+Has_Table:
+    InvoiceNumber - 6 digit integer value (PK)
+    OrderNumber - 6 digit integer value (PK)
+    
+Requests_Table:
+    OrderNumber - 6 digit integer value (PK)
+    E_SIN - 9 digit integer value (PK)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
