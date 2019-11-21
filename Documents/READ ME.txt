@@ -84,7 +84,7 @@ Invoice_Table:
     InvoiceNumber - 6 digit integer value (PK)
     Date - 255 char varchar
     Cost - 255 char varchar
-    Status - 255 char varchar
+    Status - Status of payment (ENUM: Paid, Unpaid)
     C_SIN - 9 digit integer value
     OrderNumber - 6 digit integer value
     
