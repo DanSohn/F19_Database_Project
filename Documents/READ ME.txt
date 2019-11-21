@@ -55,19 +55,19 @@ Collects_From_Table:
     
 Installation_Table:
     E_SIN - 9 digit integer value (PK)
-    Location - 255 char varchar (PK)
-    Substrate - 255 char varchar (PK)
-    Status - 255 char varchar (PK)
+    Location - 255 char varchar 
+    Substrate - 255 char varchar 
+    Status - 255 char varchar 
     OrderNumber - 6 digit integer value
     
     
 Prepares_Table:
     E_SIN - 9 digit integer value (PK)
-    OrderNumber - 6 digit integer value
+    OrderNumber - 6 digit integer value (PK)
     
 Designer_Table:
     SIN - 9 digit integer value (PK)
-    Experience - 255 char varchar (PK)
+    Experience - 255 char varchar
     
 Designer_Specialization_Table:
     D_SIN - 9 digit integer value (PK)
