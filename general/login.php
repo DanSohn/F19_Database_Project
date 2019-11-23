@@ -1,51 +1,70 @@
-<?php 
-
+<?php
 	include('config/db_connect.php');
-	$email1 = $password1 = '';
 
-	$errors1 = array('email' => '', 'password' => '');
+	$email = $password = '';
 
-	if(isset($_POST['login'])) {
-		$email1 = $_POST['email'];
-		$password1 = $_POST['password'];
+	$errors = array('credentials' => '', 'email' => '', 'password' => '');
 
-		if (empty($email1)) {
-			$errors1['email'] = "Please enter your email. <br />";
+	if(isset($_POST['login'])){
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+
+		if(empty($email)){
+			$errors['email'] = 'Email cannot be empty. <br />';
 		}
-		if(empty($password1)) {
-			$errors1['password'] = "Please enter your password. <br />";
+		if(empty($password)){
+			$errors['password'] = 'Password cannot be empty. <br />';
 		}
-		header('Location: login.php');
+		if (!array_filter($errors)){
+			$email = mysqli_real_escape_string($conn, $_POST['email']);
+			$password = mysqli_real_escape_string($conn, $_POST['password']);
+
+			$sql = "SELECT * FROM person WHERE Email = '".$email."'";
+			$result = mysqli_query($conn, $sql);
+			if ($details = mysqli_fetch_assoc($result)){
+				if($password == $details['Password']){
+					echo "inside";
+					setcookie("uname", $details['Email'], time()+3600);
+					header("location: index.php");
+				}
+				else{
+					$errors['credentials'] = "Invalid credentials";
+					setcookie("uname", $details['Email'], time()-3600);
+				}
+			}
+		}
 	}
 
  ?>
 
  <!DOCTYPE html>
  <html>
+
  	<?php  include('templates/header.php');?>
-
- 	<section class="container black-text">
- 		
- 		<form class="white lighten-5 z-depth-2" action = "login.php" method = "POST">
- 			<h4 class="center">Sign In</h4>
-
- 			<label>Email:</label>
-			<input type="text" name="email" value = "<?php echo $email1?>">
-			<div class="red-text"><?php echo $errors1['email'];?></div>
+ 	<?php if(isset($_COOKIE['uname'])):?>
+ 		<?php header('location:index.php'); ?>
+	<?php endif; ?>
+	
+	<section class="container grey-text">
+		<h4 class="center">Log In</h4>
+		<form class="white" action = "login.php" method = "POST">
+			<div class="red-text"><?php echo $errors['credentials']; ?></div>
+			<label>Email:</label>
+			<input type="text" name="email">
+			<div class = "red-text"><?php echo $errors['email'];?></div>
 
 			<label>Password:</label>
 			<input type="password" name="password">
-			<div class="red-text">
-				<?php echo $errors1['password'];?>
-			</div>
-			<br><div class="center">
-				<input type="submit" name="Login" value = "login" class= "btn brand z-depth-1">
+
+			<div class="center">
+				<input type="submit" name = "login" class = "btn brand z-depth-1"></input>
 			</div>
 			<div class="card-action center-align">
 				<br>Don't have an account?<a href="signup.php"> Sign up here.</a>
 			</div>
- 		</form>
- 	</section>
+		</form>
+	</section>
 
  	<?php  include('templates/footer.php');?>
+
  </html>

@@ -24,6 +24,7 @@
 <html>
 
 <?php  include('templates/header.php');?>
+<?php  include('config/cookies.php');?>
 <div class="container center">
 	<?php if($detail): ?>
 		<h4><?php echo htmlspecialchars($detail['FName']." ".$detail['MName']." ".$detail['LName']);?></h4>

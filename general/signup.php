@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	include('config/db_connect.php');
 	$firstName = $middleName = $lastName = $email = $sin = $phone = $address = $city = $postalCode = "";
@@ -28,7 +28,7 @@
   		}
 
 		  //valid middleName check
-		if(!empty($middleName)){ 
+		if(!empty($middleName)){
   			if(!preg_match('/^[a-zA-z\s]+$/', $middleName)) {
   				$errors['middleName'] = 'Middle name must be letters and spaces only.';
 		  }
@@ -102,7 +102,7 @@
   			$middleName = mysqli_real_escape_string($conn,$_POST['middleName']);
   			$lastName = mysqli_real_escape_string($conn,$_POST['lastName']);
   			$email = mysqli_real_escape_string($conn,$_POST['email']);
-  			$password = password_hash(mysqli_real_escape_string($conn,$_POST['password']), PASSWORD_DEFAULT);
+  			$password = mysqli_real_escape_string($conn,$_POST['password']);
   			$sin = mysqli_real_escape_string($conn,$_POST['sin']);
   			$phone = mysqli_real_escape_string($conn,$_POST['phoneNumber']);
   			$address = mysqli_real_escape_string($conn,$_POST['address']);
@@ -120,12 +120,12 @@
   				//error
   				echo 'query error: '. mysqli_error($conn);
   			}
-  			
+
   		}
   	}
 
 
-  		
+
 
 ?>
 
@@ -137,7 +137,7 @@
 	<section class="container grey-text">
 		<h4 class="center">Sign up </h4>
     <div class="card-action center-align">
-        <br>Already have an account??<a href="login2.php"> login here.</a>
+        <br>Already have an account?<a href="login.php"> login here.</a>
       </div>
 		<form class="white z-depth-2" action ="signup.php" method="POST">
 

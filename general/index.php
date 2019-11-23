@@ -24,6 +24,7 @@
  <html>
 
 	<?php  include('templates/header.php');?>
+	<?php  include('config/cookies.php');?>
 
 	<h4 class="center grey-text">Users!</h4>
 
@@ -38,7 +39,7 @@
 							<div><?php echo htmlspecialchars($person['LName']) ?></div>
 						</div>
 						<div class="card-action right-align">
-							<a class="brand-text" href="details.php?sin=<?php echo $person['SIN']?>">more info</a>
+							<a class="Pink" href="details.php?sin=<?php echo $person['SIN']?>">more info</a>
 						</div>
 					</div>
 				</div>
