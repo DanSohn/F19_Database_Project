@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style type="text/css">
     	.brand{
-    		background: #FF9C9C !important;
+    		background: #7fcdcd !important;
     	}
     	.brand-text{
-    		color: #FF9C9C !important;
+    		color: #ffffff !important;
     	}
     	form{
     		max-width: 460px;
@@ -17,7 +17,7 @@
     </style>
  </head>
   <body class = "yellow lighten-5">
-  	<nav class = "white z-depth-1">
+  	<nav class = "pink lighten-4 z-depth-1">
   		<div class="container">
   			<a href = 'index.php' class = "brand-log brand-text"><font size = "8">NKG Graphics</font></a>
   			<ul id="nav-mobile" class="right hide-on-small-and-down">

@@ -27,10 +27,12 @@
   			}
   		}
 
-  		//valid middleName check
-  		if(!preg_match('/^[a-zA-z\s]+$/', $middleName)) {
-  			$errors['middleName'] = 'Middle name must be letters and spaces only.';
-  		}
+		  //valid middleName check
+		if(!empty($middleName)){ 
+  			if(!preg_match('/^[a-zA-z\s]+$/', $middleName)) {
+  				$errors['middleName'] = 'Middle name must be letters and spaces only.';
+		  }
+		}
 
 
   		//valid lastName check
@@ -134,7 +136,10 @@
 
 	<section class="container grey-text">
 		<h4 class="center">Sign up </h4>
-		<form class="white" action ="signup.php" method="POST">
+    <div class="card-action center-align">
+        <br>Already have an account??<a href="login2.php"> login here.</a>
+      </div>
+		<form class="white z-depth-2" action ="signup.php" method="POST">
 
 			<label>First Name:</label>
 			<input type="text" name="firstName" value = "<?php echo $firstName?>">

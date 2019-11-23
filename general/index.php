@@ -3,7 +3,7 @@
 	include('config/db_connect.php');
 
 	//write query for all persons
-	$sql = 'SELECT FName, LName, SIN, PhoneNumber FROM person_table';
+	$sql = 'SELECT FName, LName, SIN, PhoneNumber FROM person';
 
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
