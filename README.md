@@ -2,7 +2,7 @@
 
 ## Fall 2019 CPSC 471 Database Project
 
-![Image of logo](https://github.com/DanSohn/F19_Database_Project/images/logo.png)
+![Image of logo](https://github.com/DanSohn/F19_Database_Project/blob/master/images/logo.png)
 
 
 This repository ccontains the web server and database for the NKG business.
