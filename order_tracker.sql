@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2019 at 08:19 AM
+-- Generation Time: Nov 24, 2019 at 12:03 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -36,6 +36,14 @@ CREATE TABLE `artwork_table` (
   `OrderNumber` int(6) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `artwork_table`
+--
+
+INSERT INTO `artwork_table` (`D_SIN`, `size`, `color`, `format`, `OrderNumber`) VALUES
+(200000000, 'large', 'blue', 'capital letters', 200000),
+(200000000, 'small', 'red', 'underline text', 200005);
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +54,13 @@ CREATE TABLE `client_table` (
   `SIN` int(9) UNSIGNED NOT NULL,
   `M_SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `client_table`
+--
+
+INSERT INTO `client_table` (`SIN`, `M_SIN`) VALUES
+(999999999, 100000000);
 
 -- --------------------------------------------------------
 
@@ -58,6 +73,13 @@ CREATE TABLE `collects_from_table` (
   `E_SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `collects_from_table`
+--
+
+INSERT INTO `collects_from_table` (`SupplierName`, `E_SIN`) VALUES
+('Supplier Inc.', 300000000);
+
 -- --------------------------------------------------------
 
 --
@@ -68,6 +90,13 @@ CREATE TABLE `designer_specialization_table` (
   `D_SIN` int(9) UNSIGNED NOT NULL,
   `DSpecialization` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `designer_specialization_table`
+--
+
+INSERT INTO `designer_specialization_table` (`D_SIN`, `DSpecialization`) VALUES
+(200000000, 'machine learning');
 
 -- --------------------------------------------------------
 
@@ -80,6 +109,13 @@ CREATE TABLE `designer_table` (
   `Experience` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `designer_table`
+--
+
+INSERT INTO `designer_table` (`SIN`, `Experience`) VALUES
+(200000000, 'python');
+
 -- --------------------------------------------------------
 
 --
@@ -89,6 +125,13 @@ CREATE TABLE `designer_table` (
 CREATE TABLE `employee_table` (
   `SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee_table`
+--
+
+INSERT INTO `employee_table` (`SIN`) VALUES
+(300000000);
 
 -- --------------------------------------------------------
 
@@ -100,6 +143,14 @@ CREATE TABLE `has_table` (
   `InvoiceNumber` int(6) UNSIGNED NOT NULL,
   `OrderNumber` int(6) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `has_table`
+--
+
+INSERT INTO `has_table` (`InvoiceNumber`, `OrderNumber`) VALUES
+(100000, 200000),
+(100001, 200001);
 
 -- --------------------------------------------------------
 
@@ -114,6 +165,13 @@ CREATE TABLE `installation_table` (
   `Status` varchar(255) NOT NULL,
   `OrderNumber` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `installation_table`
+--
+
+INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `OrderNumber`) VALUES
+(300000000, 'Calgary', 'steel', 'in progress', 200006);
 
 -- --------------------------------------------------------
 
@@ -130,6 +188,14 @@ CREATE TABLE `invoice_table` (
   `OrderNumber` int(6) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `invoice_table`
+--
+
+INSERT INTO `invoice_table` (`InvoiceNumber`, `date`, `cost`, `status`, `C_SIN`, `OrderNumber`) VALUES
+(100000, '2019-11-23', '100', 'Not Paid', 999999999, 200000),
+(100001, '2019-11-23', '1500', 'Paid', 999999999, 200001);
+
 -- --------------------------------------------------------
 
 --
@@ -139,6 +205,13 @@ CREATE TABLE `invoice_table` (
 CREATE TABLE `manager_table` (
   `SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `manager_table`
+--
+
+INSERT INTO `manager_table` (`SIN`) VALUES
+(100000000);
 
 -- --------------------------------------------------------
 
@@ -154,6 +227,19 @@ CREATE TABLE `order_table` (
   `M_SIN` int(9) UNSIGNED NOT NULL,
   `OrderStatus` enum('Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Order Created'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order_table`
+--
+
+INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `M_SIN`, `OrderStatus`) VALUES
+(200000, 100, 3, '2019-11-20', 100000000, 'Complete'),
+(200001, 1500, 100, '2019-11-21', 100000000, 'Complete'),
+(200002, 400, 10, '2019-11-23', 100000000, 'Order Created'),
+(200003, 500, 1, '2019-11-23', 100000000, 'Collected Supplies'),
+(200004, 1000, 2, '2019-11-15', 100000000, 'Preparing Artwork'),
+(200005, 2000, 15, '2019-11-10', 100000000, 'Artwork Complete'),
+(200006, 3000, 30, '2019-11-19', 100000000, 'In Preparation');
 
 -- --------------------------------------------------------
 
@@ -172,7 +258,7 @@ CREATE TABLE `person_table` (
   `City` varchar(255) NOT NULL,
   `PostalCode` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
-  `PersonType` enum('Client','Worker','','') NOT NULL
+  `PersonType` enum('Client','Manager','Employee','Designer') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -180,9 +266,11 @@ CREATE TABLE `person_table` (
 --
 
 INSERT INTO `person_table` (`SIN`, `FName`, `MName`, `LName`, `PhoneNumber`, `Email`, `Address`, `City`, `PostalCode`, `Password`, `PersonType`) VALUES
-(111222, 'Daniel', '', 'Sohn', 403, 'daniel@gmail.com', '123 dragon city SW', 'Calgary', 'T2W 3W3', '$2y$10$iQvlYnzXS8dRw7VuSKsTJuvtStc28O7mkZSTpU2VXE59LwoHofIHK', ''),
-(9876543, 'Panagiota', '', 'Fytopoulou', 7809130497, 'panagiota.fytopoulou@gmail.com', '808 Willingdon Blvd SE', 'Calgary', 'T2J 2B4', '$2y$10$McthJYBKBvT8UADGmCRCDeSZG.6v0DpTTH63pkfOmt/yP9GcA4fqC', ''),
-(111222333, 'Peter', 'Kyoung Hwan', 'Namkoong', 4039039827, 'peternamkoong@gmail.com', '148 Wentworth Close SW', 'Calgary', 'T3H 4W1', '$2y$10$m4hTL4clHrN13w7j6CEkYOI8h8IWQ/kwP6r9sKfLu11HbujruOfAC', '');
+(0, 'admin', 'root', 'admin', 0, 'admin', 'admin', 'admin', 'a1aa1a', '1234', 'Manager'),
+(100000000, 'Peter', 'Kyoung Hwan', 'Namkoong', 4039039827, 'peternamkoong@gmail.com', '148 Wentworth Close SW', 'Calgary', 'T3H 4W1', '1234', 'Manager'),
+(200000000, 'Panagiota', 'THE GREEK', 'Fytopoulou', 7809130497, 'panagiota.fytopoulou@gmail.com', '808 Willingdon Blvd SE', 'Calgary', 'T2J 2B4', '1234', 'Designer'),
+(300000000, 'Daniel', '', 'Sohn', 403123234, 'daniel@gmail.com', '123 dragon city SW', 'Calgary', 'T2W 3W3', '1234', 'Employee'),
+(999999999, 'Jalal', '', 'Kawash', 4030000000, 'jalal.kawash@ucalgary.ca', '471 database st.', 'Calgary', 't1a2c6', '1234', 'Client');
 
 -- --------------------------------------------------------
 
@@ -195,6 +283,13 @@ CREATE TABLE `prepares_table` (
   `OrderNumber` int(6) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `prepares_table`
+--
+
+INSERT INTO `prepares_table` (`E_SIN`, `OrderNumber`) VALUES
+(300000000, 200006);
+
 -- --------------------------------------------------------
 
 --
@@ -205,6 +300,13 @@ CREATE TABLE `requests_table` (
   `OrderNumber` int(6) UNSIGNED NOT NULL,
   `E_SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `requests_table`
+--
+
+INSERT INTO `requests_table` (`OrderNumber`, `E_SIN`) VALUES
+(200006, 300000000);
 
 -- --------------------------------------------------------
 
@@ -217,6 +319,13 @@ CREATE TABLE `supplier_table` (
   `location` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `supplier_table`
+--
+
+INSERT INTO `supplier_table` (`name`, `location`) VALUES
+('Supplier Inc.', 'Calgary');
+
 -- --------------------------------------------------------
 
 --
@@ -224,6 +333,7 @@ CREATE TABLE `supplier_table` (
 --
 
 CREATE TABLE `supply_table` (
+  `ItemID` int(5) UNSIGNED NOT NULL,
   `SupplierName` varchar(255) NOT NULL,
   `brand` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
@@ -234,16 +344,14 @@ CREATE TABLE `supply_table` (
   `M_SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `worker_table`
+-- Dumping data for table `supply_table`
 --
 
-CREATE TABLE `worker_table` (
-  `SIN` int(9) UNSIGNED NOT NULL,
-  `WorkerType` enum('Manager','Employee','Designer','') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `supply_table` (`ItemID`, `SupplierName`, `brand`, `type`, `cost`, `size`, `color`, `durability`, `M_SIN`) VALUES
+(10001, 'Supplier Inc.', 'Guess', 'Dress Shirts', 80, 'large', 'white', 'medium', 100000000),
+(10002, 'Supplier Inc.', 'Fossil', 'Watch', 200, 'small', 'black', 'hella lots', 100000000),
+(10003, 'Supplier Inc.', 'Dan the Store Man', 'Human', 10, 'large', 'green', 'brittle', 100000000);
 
 --
 -- Indexes for dumped tables
@@ -253,7 +361,7 @@ CREATE TABLE `worker_table` (
 -- Indexes for table `artwork_table`
 --
 ALTER TABLE `artwork_table`
-  ADD PRIMARY KEY (`D_SIN`);
+  ADD PRIMARY KEY (`OrderNumber`);
 
 --
 -- Indexes for table `client_table`
@@ -343,13 +451,7 @@ ALTER TABLE `supplier_table`
 -- Indexes for table `supply_table`
 --
 ALTER TABLE `supply_table`
-  ADD PRIMARY KEY (`SupplierName`);
-
---
--- Indexes for table `worker_table`
---
-ALTER TABLE `worker_table`
-  ADD PRIMARY KEY (`SIN`);
+  ADD PRIMARY KEY (`ItemID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
