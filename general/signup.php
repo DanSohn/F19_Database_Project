@@ -109,8 +109,8 @@
   			$city = mysqli_real_escape_string($conn,$_POST['city']);
   			$postalCode = mysqli_real_escape_string($conn,$_POST['postalCode']);
 
-  			$sql = "INSERT INTO person(SIN, FName, MName, LName,Email, PhoneNumber, Address, City, PostalCode, Password) VALUES
-  			 ('$sin', '$firstName','$middleName','$lastName','$email','$phone','$address','$city', '$postalCode','$password')";
+  			$sql = "INSERT INTO person_table(SIN, FName, MName, LName,Email, PhoneNumber, Address, City, PostalCode, Password, PersonType) VALUES
+  			 ('$sin', '$firstName','$middleName','$lastName','$email','$phone','$address','$city', '$postalCode','$password', '1')";
 
   			//save to DB
   			if (mysqli_query($conn, $sql)){

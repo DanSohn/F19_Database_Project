@@ -19,7 +19,7 @@
 			$email = mysqli_real_escape_string($conn, $_POST['email']);
 			$password = mysqli_real_escape_string($conn, $_POST['password']);
 
-			$sql = "SELECT * FROM person WHERE Email = '".$email."'";
+			$sql = "SELECT * FROM person_table WHERE Email = '".$email."'";
 			$result = mysqli_query($conn, $sql);
 			if ($details = mysqli_fetch_assoc($result)){
 				if($password == $details['Password']){
