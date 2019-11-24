@@ -6,8 +6,8 @@
 	$errors = array('credentials' => '', 'email' => '', 'password' => '');
 
 	if(isset($_POST['login'])){
-		$email = $_POST['email'];
-		$password = $_POST['password'];
+		$email = htmlspecialchars($_POST['email']);
+		$password = htmlspecialchars($_POST['password']);
 
 		if(empty($email)){
 			$errors['email'] = 'Email cannot be empty. <br />';
@@ -47,7 +47,7 @@
 	
 	<section class="container grey-text">
 		<h4 class="center">Log In</h4>
-		<form class="white" action = "login.php" method = "POST">
+		<form class="white z-depth-2" action = "login.php" method = "POST">
 			<div class="red-text"><?php echo $errors['credentials']; ?></div>
 			<label>Email:</label>
 			<input type="text" name="email">

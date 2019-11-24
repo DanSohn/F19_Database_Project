@@ -7,16 +7,16 @@
 
   	if(isset($_POST['submit'])) {
 
-  		$firstName = $_POST['firstName'];
-  		$middleName = $_POST['middleName'];
-  		$lastName = $_POST['lastName'];
-  		$email = $_POST['email'];
-  		$password = $_POST['password'];
-  		$sin = $_POST['sin'];
-  		$phone = $_POST['phoneNumber'];
-  		$address = $_POST['address'];
-  		$city = $_POST['city'];
-  		$postalCode = $_POST['postalCode'];
+  		$firstName = htmlspecialchars($_POST['firstName']);
+  		$middleName = htmlspecialchars($_POST['middleName']);
+  		$lastName = htmlspecialchars($_POST['lastName']);
+  		$email = htmlspecialchars($_POST['email']);
+  		$password = htmlspecialchars($_POST['password']);
+  		$sin = htmlspecialchars($_POST['sin']);
+  		$phone = htmlspecialchars($_POST['phoneNumber']);
+  		$address = htmlspecialchars($_POST['address']);
+  		$city = htmlspecialchars($_POST['city']);
+  		$postalCode = htmlspecialchars($_POST['postalCode']);
 
   		//valid firstName check
   		if(empty($firstName)){

@@ -9,6 +9,14 @@
     	.brand-text{
     		color: #ffffff !important;
     	}
+      textarea {
+        width:100%;
+        height:150px;
+        border:1px solid #CCC;
+        background:#FFF;
+        margin:0 0 5px;
+        padding:10px;
+      }
     	form{
     		max-width: 460px;
     		margin: 20px auto;
