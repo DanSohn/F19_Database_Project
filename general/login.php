@@ -25,7 +25,7 @@
 				if($password == $details['Password']){
 					echo "inside";
 					setcookie("uname", $details['Email'], time()+3600);
-					header("location: index.php");
+					header("location: dashboard.php");
 				}
 				else{
 					$errors['credentials'] = "Invalid credentials";
