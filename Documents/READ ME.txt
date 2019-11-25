@@ -3,6 +3,8 @@ Order_Table:
     Cost        - integer value
     Quantity    - 3 digit integer value
     Created Date- Date value, default wise set to current date
+    Length      - 3 digit integer value
+    Width       - 3 digit integer value
     M_SIN       - 9 digit integer value
     OrderStatus - Status of order (ENUM : Order Created, Collected Supplies, Preparing Artwork, Artwork Complete, In Preparation, Complete)
     
