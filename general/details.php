@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include('config/db_connect.php');
 
 	//check GET request id param
@@ -6,7 +6,7 @@
 		$sin = mysqli_real_escape_string($conn, $_GET['sin']);
 
 		//make sql
-		$sql = "SELECT * FROM person WHERE SIN = $sin";
+		$sql = "SELECT * FROM person_table WHERE SIN = $sin";
 
 		//get the query result
 		$result = mysqli_query($conn, $sql);

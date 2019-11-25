@@ -20,8 +20,9 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `order_tracker`
+CREATE DATABASE order_tracker;
+USE order_tracker;
 --
-
 -- --------------------------------------------------------
 
 --
