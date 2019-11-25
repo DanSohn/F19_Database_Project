@@ -45,6 +45,7 @@
  		<?php header('location:index.php'); ?>
 	<?php endif; ?>
 	
+    <!-- footer style not added -->
 	<section class="container grey-text">
 		<h4 class="center">Log In</h4>
 		<form class="white z-depth-2" action = "login.php" method = "POST">

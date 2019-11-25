@@ -25,6 +25,7 @@
 
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
+<!-- footer style padding not added -->
 <div class="container center">
 	<?php if($status): ?>
 		<h4><?php echo htmlspecialchars($status['OrderNumber']." ".$status['Cost']." ".$status['OrderStatus']);?></h4>

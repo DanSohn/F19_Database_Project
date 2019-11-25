@@ -47,6 +47,8 @@
 
  	<?php  include('templates/header.php');?>
 
+
+    <!-- footer style not added -->
 	<section class="container grey-text">
 		<h4 class="center">Sign Up</h4>
 		<form class="white" action = "login2.php" method = "POST">

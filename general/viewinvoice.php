@@ -28,6 +28,7 @@
 
 	<h4 class="center grey-text">All Invoices</h4>
 
+<!-- footer style not added -->
 	<div class="container">
 		<div class="row">
 

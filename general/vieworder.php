@@ -22,13 +22,14 @@
 
  <!DOCTYPE html>
  <html>
-
+    <!-- header contains the whole head tag, and the beginning of the body tag -->
 	<?php  include('templates/header.php');?>
 	<?php  include('config/cookies.php');?>
-
+    
 	<h4 class="center grey-text">All Orders</h4>
 
-	<div class="container">
+	<div class="container" style="padding-bottom:5rem;">
+    
 		<div class="row">
 
 			<?php foreach($orders as $order): ?>
@@ -46,7 +47,9 @@
 			<?php endforeach; ?>
 
 		</div>
-	</div>
+        
+	
+    </div>
 
 	<?php  include('templates/footer.php');?>
 

@@ -52,7 +52,7 @@
    <?php  include('templates/header.php');?>
    <?php  include('config/cookies.php');?>
 
-   <section class="container grey-text">
+   <section class="container grey-text" style="padding-bottom:5rem;">
       <h4 class="center">Order Form</h4>
     <div class="card-action center-align"></div>
       <form class="white z-depth-2" action ="neworder.php" method="POST">

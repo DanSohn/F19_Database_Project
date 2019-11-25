@@ -28,7 +28,7 @@
 
 	<h4 class="center grey-text">Users!</h4>
 
-	<div class="container">
+	<div class="container" style="padding-bottom:5rem;">
 		<div class="row">
 			
 			<?php foreach($user as $person): ?>

@@ -65,7 +65,7 @@
  <html>
 
  	<?php  include('templates/header.php');?>
- 	<section class="container grey-text">
+ 	<section class="container grey-text" style="padding-bottom:5rem;">
  		<h4 class="center">Contact Us</h4>
  		<div class="card-action left-align">
  			<form class="white z-depth-2" action = "contactus.php" method = "POST">

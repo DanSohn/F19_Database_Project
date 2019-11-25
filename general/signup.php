@@ -134,7 +134,7 @@
 
 	<?php  include('templates/header.php');?>
 
-	<section class="container grey-text">
+	<section class="container grey-text" style="padding-bottom:5rem;">
 		<h4 class="center">Sign up </h4>
     <div class="card-action center-align">
         <br>Already have an account?<a href="login.php"> login here.</a>

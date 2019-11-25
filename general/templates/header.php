@@ -24,7 +24,7 @@
     	}
     </style>
  </head>
-  <body class = "yellow lighten-5">
+  <body class = "yellow lighten-5" style="position:relative;min-height:100vh;text-align:center;">
   	<nav class = "pink lighten-4 z-depth-1">
   		<div class="container">
   			<a href = 'index.php' class = "brand-log brand-text"><font size = "8">NKG Graphics</font></a>

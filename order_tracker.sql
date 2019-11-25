@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2019 at 08:26 AM
+-- Generation Time: Nov 25, 2019 at 10:18 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -157,7 +157,7 @@ CREATE TABLE `order_table` (
   `length` int(3) UNSIGNED NOT NULL,
   `width` int(3) UNSIGNED NOT NULL,
   `M_SIN` int(9) UNSIGNED NOT NULL,
-  `OrderStatus` enum('Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Order Created'
+  `OrderStatus` enum('Request Pending','Rejected','Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Request Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -283,9 +283,9 @@ CREATE TABLE `supply_table` (
 --
 
 INSERT INTO `supply_table` (`ItemID`, `SupplierName`, `brand`, `type`, `cost`, `size`, `color`, `durability`, `M_SIN`) VALUES
-(10001, 'Supplier Inc.', 'Guess', 'Dress Shirts', 80, 'large', 'white', 'medium', 100000000),
-(10002, 'Supplier Inc.', 'Fossil', 'Watch', 200, 'small', 'black', 'hella lots', 100000000),
-(10003, 'Supplier Inc.', 'Dan the Store Man', 'Human', 10, 'large', 'green', 'brittle', 100000000);
+(10001, 'Supplier Inc.', 'Guess', 'Dress Shirts', 80, '12', 'white', '5', 100000000),
+(10002, 'Supplier Inc.', 'Fossil', 'Watch', 200, '24', 'black', '10', 100000000),
+(10003, 'Supplier Inc.', 'Dan the Store Man', 'Human', 10, '48', 'green', '15', 100000000);
 
 --
 -- Indexes for dumped tables
