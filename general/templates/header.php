@@ -30,7 +30,7 @@
 
     </style>
  </head>
-  <body class = "yellow lighten-5" style="position:relative;min-height:100vh;text-align:center;">
+  <body class = "yellow lighten-5" style="position:relative;min-height:100vh;text-align:center;padding-bottom:4rem;">
   	<nav class = "pink lighten-4 z-depth-1">
   		<div class="container">
   			<a href = 'dashboard.php' class = "brand-log brand-text"><font size = "8">NKG Graphics</font></a>

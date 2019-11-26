@@ -28,7 +28,7 @@
 <h4 class="center grey-text">All Orders</h4>
 
 <!-- footer style not added -->
-<div class="row justify-content-center white z-depth-2" style ="width:1040px">
+<div class="row justify-content-center white z-depth-2" style ="width:1040px;">
     <table class = "table">
         <thread>
             <tr>
