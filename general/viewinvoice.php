@@ -29,23 +29,28 @@
 	<h4 class="center grey-text">All Invoices</h4>
 
 <!-- footer style not added -->
-	<div class="container">
-		<div class="row">
-
-			<?php foreach($invoice as $one): ?>
-				<div class="col s6 md3">
-					<div class="card z-depth-1">
-						<div class="card-content center">
-							<h6><?php echo htmlspecialchars($one['InvoiceNumber']); ?></h6>
-							<div><?php echo htmlspecialchars($one['OrderNumber']) ?></div>
-						</div>
-            <div class="card-action right-align">
-							<a class="Pink" href="invoicestatus.php?InvoiceNumber=<?php echo $one['InvoiceNumber']?>">View Details of Invoice</a>
-						</div>
-					</div>
-				</div>
-			<?php endforeach; ?>
-
+	<div class="row justify-content-center white z-depth-2" style ="width:1040px">
+		<table class = "table">
+            <thread>
+                <tr>
+                    <th class = "center">Invoice Number</th>
+                    <th class = "center">Status</th>
+                    <th colspan = '2' class ="center">Action</th>
+                </tr>
+            </thread>
+            <?php foreach ($invoice as $one):?>
+              <tr>
+                  <td class = "center"><?php echo htmlspecialchars($one['InvoiceNumber']); ?></td>
+                  <td class = "center"><?php echo htmlspecialchars($one['status']); ?></td>
+                  <td class = "center">
+                      <a href="invoicestatus.php?InvoiceNumber=<?php echo $one['InvoiceNumber'];?>" class = "btn btn-info">view</a>
+                      <?php if ($one['status'] == "Not Paid"): ?>
+                          <a href="settle_invoice.php?InvoiceNumber = <?php echo $one['InvoiceNumber'];?>" class = "btn btn-info">settle</a>
+                      <?php endif; ?>
+                  </td>
+              </tr>
+            <?php endforeach; ?>
+        </table>
 		</div>
 	</div>
 

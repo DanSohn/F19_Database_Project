@@ -2,9 +2,20 @@
 
 	include('config/db_connect.php');
 
-	//write query for all orders ordered by date (this can change if we like)
-	$sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
+	$email = mysqli_real_escape_string($conn, $_COOKIE['uname']);
+    $sql = "SELECT * FROM person_table WHERE Email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    $detail = mysqli_fetch_array($result);
+    mysqli_close($conn);
 
+    $personType = $detail['PersonType'];
+	//write query for all orders ordered by date (this can change if we like)
+    if(!$personType == 'Client') {
+        $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
+    }
+    else{
+        $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
+    }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
 
@@ -21,36 +32,36 @@
  ?>
 
  <!DOCTYPE html>
- <html>
-    <!-- header contains the whole head tag, and the beginning of the body tag -->
-	<?php  include('templates/header.php');?>
-	<?php  include('config/cookies.php');?>
-    
-	<h4 class="center grey-text">All Orders</h4>
+<html>
 
-	<div class="container" style="padding-bottom:5rem;">
-    
-		<div class="row">
+<?php  include('templates/header.php');?>
+<?php  include('config/cookies.php');?>
 
-			<?php foreach($orders as $order): ?>
-				<div class="col s6 md3">
-					<div class="card z-depth-1">
-						<div class="card-content center">
-							<h6><?php echo htmlspecialchars($order['OrderNumber']); ?></h6>
-							<div><?php echo htmlspecialchars($order['OrderStatus']) ?></div>
-						</div>
-            <div class="card-action right-align">
-							<a class="Pink" href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>">View Details of Order</a>
-						</div>
-					</div>
-				</div>
-			<?php endforeach; ?>
+<h4 class="center grey-text">All Orders</h4>
 
-		</div>
-        
-	
-    </div>
+<!-- footer style not added -->
+<div class="row justify-content-center white z-depth-2" style ="width:1040px">
+    <table class = "table">
+        <thread>
+            <tr>
+                <th class = "center">Invoice Number</th>
+                <th class = "center">Status</th>
+                <th colspan = '2' class ="center">Action</th>
+            </tr>
+        </thread>
+        <?php foreach ($orders as $order):?>
+            <tr>
+                <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
+                <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
+                <td class = "center">
+                    <a href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+</div>
 
-	<?php  include('templates/footer.php');?>
+<?php  include('templates/footer.php');?>
 
- </html>
+</html>
