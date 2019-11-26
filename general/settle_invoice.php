@@ -2,7 +2,6 @@
    include('config/db_connect.php');
 
    $month = $year = $card_name = $card_cvv = $card_number = $success = "";
-   //$errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '');
    $errors = array('month' => '', 'year' => '', 'card_name' => '', 'card_cvv' => '', 'card_number' => '');
    
    if(isset($_POST['request'])) {
@@ -22,13 +21,13 @@
       }
       
       if(empty($card_name)){
-         $errors['detail'] = 'Please enter your full name, as shown on your credit card. <br />';
+         $errors['card_name'] = "Please enter your full name, as shown on your credit card. <br />";
       }
       if(empty($card_cvv)){
-         $errors['detail'] = 'Please enter your cvv, as shown on the back of your credit card. <br />';
+         $errors['card_cvv'] = 'Please enter your cvv, as shown on the back of your credit card. <br />';
       }
       if(empty($card_number)){
-         $errors['detail'] = 'Please provide your credit card number. <br />';
+         $errors['card_number'] = 'Please provide your credit card number. <br />';
       }
       
       if (!array_filter($errors)){
@@ -68,7 +67,7 @@
       <h4 class="center">Settle Invoice</h4>
     <div class="card-action center-align"></div>
       <form class="white z-depth-2" action ="settle_invoice.php" method="POST">
-         <h6 class="green-text center-align"><?php echo $success;?></h5>
+         <h6 class="green-text center-align"><?php echo $success;?></h6>
          
          <label>Card Holder Name</label>
             <input type = "text" name = "card_name" value = "<?php echo $card_name?>" placeholder="John M. Doe">
