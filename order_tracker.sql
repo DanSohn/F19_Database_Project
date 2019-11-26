@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2019 at 01:15 AM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Nov 26, 2019 at 02:29 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -140,7 +140,7 @@ CREATE TABLE `invoice_table` (
 --
 
 INSERT INTO `invoice_table` (`InvoiceNumber`, `date`, `cost`, `status`, `C_SIN`, `OrderNumber`) VALUES
-(100000, '2019-11-23', '100', 'Paid', 999999999, 200000),
+(100000, '2019-11-23', '100', 'Not Paid', 999999999, 200000),
 (100001, '2019-11-23', '1500', 'Paid', 999999999, 200001);
 
 -- --------------------------------------------------------
@@ -157,23 +157,24 @@ CREATE TABLE `order_table` (
   `length` int(3) UNSIGNED NOT NULL,
   `width` int(3) UNSIGNED NOT NULL,
   `M_SIN` int(9) UNSIGNED NOT NULL,
-  `OrderStatus` enum('Request Pending','Rejected','Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Request Pending'
+  `OrderStatus` enum('Request Pending','Rejected','Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Request Pending',
+  `Client_SIN` int(9) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order_table`
 --
 
-INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`) VALUES
-(1, 12, 3, '2019-11-24', 2, 2, 0, 'Order Created'),
-(200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Complete'),
-(200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Complete'),
-(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Order Created'),
-(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Collected Supplies'),
-(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Preparing Artwork'),
-(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Artwork Complete'),
-(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Preparation'),
-(200007, 324, 9, '2019-11-25', 6, 6, 0, 'Request Pending');
+INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`, `Client_SIN`) VALUES
+(1, 12, 3, '2019-11-24', 2, 2, 0, 'Order Created', 999999999),
+(200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Complete', 999999999),
+(200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Complete', 999999999),
+(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Order Created', 999999999),
+(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Collected Supplies', 999999999),
+(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Preparing Artwork', 999999999),
+(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Artwork Complete', 999999999),
+(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Preparation', 999999999),
+(200007, 324, 9, '2019-11-25', 6, 6, 0, 'Request Pending', 999999999);
 
 -- --------------------------------------------------------
 
