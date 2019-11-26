@@ -2,20 +2,8 @@
 
 	include('config/db_connect.php');
 
-	$email = mysqli_real_escape_string($conn, $_COOKIE['uname']);
-    $sql = "SELECT * FROM person_table WHERE Email = '$email'";
-    $result = mysqli_query($conn, $sql);
-    $detail = mysqli_fetch_array($result);
-    mysqli_close($conn);
-
-    $personType = $detail['PersonType'];
 	//write query for all orders ordered by date (this can change if we like)
-    if(!$personType == 'Client') {
-        $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
-    }
-    else{
-        $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
-    }
+    $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
 
