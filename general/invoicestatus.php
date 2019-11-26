@@ -25,7 +25,8 @@
 
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
-<div class="container center" style="padding-bottom:5rem;">
+<h3>Order Number: <?php echo htmlspecialchars($status['InvoiceNumber']);?></h3>
+<div class="row justify-content-center white z-depth-2" style ="width:1040px">
 	<?php if($status): ?>
 		<h4><?php echo htmlspecialchars($status['InvoiceNumber']." ".$status['cost']." ".$status['status']);?></h4>
 	<?php else: ?>
