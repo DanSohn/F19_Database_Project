@@ -18,16 +18,22 @@
         padding:10px;
       }
     	form{
-    		max-width: 460px;
+    		max-width: 450px;
     		margin: 20px auto;
     		padding: 20px;
     	}
+        table{
+            max-width:1000px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
     </style>
  </head>
   <body class = "yellow lighten-5" style="position:relative;min-height:100vh;text-align:center;">
   	<nav class = "pink lighten-4 z-depth-1">
   		<div class="container">
-  			<a href = 'index.php' class = "brand-log brand-text"><font size = "8">NKG Graphics</font></a>
+  			<a href = 'dashboard.php' class = "brand-log brand-text"><font size = "8">NKG Graphics</font></a>
   			<?php if (isset($_COOKIE['uname'])): ?>
   				<ul id="nav-mobile" class="right hide-on-small-and-down">
   					<li><a href ="signout.php" class ="btn grey z-depth-1">logout</a></li>

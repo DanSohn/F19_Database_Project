@@ -40,7 +40,7 @@
             $success = "Your order request has been sent! A manager may contact you for further details.";
             $length = $width = $quantity = $detail = $references = "";
          }else{
-            echo 'query error: '.mysql_error($conn);
+            echo 'query error: '.mysqli_error($conn);
          }
       }
    }
@@ -56,7 +56,7 @@
       <h4 class="center">Order Form</h4>
     <div class="card-action center-align"></div>
       <form class="white z-depth-2" action ="neworder.php" method="POST">
-         <h6 class="green-text center-align"><?php echo $success;?></h5>
+         <h5 class="green-text center-align"><?php echo $success;?></h5>
          <label>Length:</label>
          <select name = "length" value = "<?php echo $length?>" style="display: block;">
             <option value=0 selected>------</option>
