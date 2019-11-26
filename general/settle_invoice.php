@@ -1,9 +1,17 @@
 <?php
    include('config/db_connect.php');
 
+   if(isset($_GET['InvoiceNumber'])){
+       $InvoiceNumber = mysqli_real_escape_string($conn, $_GET['InvoiceNumber']);
+       $sql = "SELECT * FROM invoice_table WHERE InvoiceNumber = $InvoiceNumber";
+       $result = mysqli_query($conn, $sql);
+       $invoice = mysqli_fetch_assoc($result);
+       mysqli_free_result($result);
+
+   }
    $month = $year = $card_name = $card_cvv = $card_number = $success = "";
    $errors = array('month' => '', 'year' => '', 'card_name' => '', 'card_cvv' => '', 'card_number' => '');
-   
+
    if(isset($_POST['request'])) {
 
       $month = htmlspecialchars($_POST['month']);
@@ -38,20 +46,20 @@
          $card_number = mysqli_real_escape_string($conn, $_POST['card_number']);
 
          $status = "Paid";
+         $InvoiceNumber = "100000";
          //$status = mysqli_real_escape_string($status);
-         
-         $invoiceNumber = "100000";
+
          //$invoiceNumber = mysqli_real_escape_string($invoiceNumber);
          //$sql = "INSERT INTO order_table(Cost, Length, Width, Quantity) VALUES
          //('$cost', '$length', '$width', '$quantity')"; 
          // Convert the invoice to be paid
-         $sql = "UPDATE invoice_table SET status = '$status' WHERE InvoiceNumber = '$invoiceNumber'";
+         $sql = "UPDATE invoice_table SET status = '$status' WHERE InvoiceNumber = '$InvoiceNumber'";
 
          if(mysqli_query($conn, $sql)){
             $success = "Thank you for paying your invoice!";
             $length = $width = $quantity = $detail = $references = "";
          }else{
-            echo 'query error: '.mysql_error($conn);
+            echo 'query error: '.mysqli_error($conn);
          }
       }
    }
@@ -97,9 +105,7 @@
             <?php endfor; ?>
          </select>
          <div class="red-text"><?php echo $errors['year'];?></div>
-         
 
-            
          <div class="center">
             <input type="submit" name="request" value = "request" class= "btn brand z-depth-1">
          </div>
