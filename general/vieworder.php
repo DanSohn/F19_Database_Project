@@ -1,9 +1,17 @@
 <?php
 
-	include('config/db_connect.php');
-
-	//write query for all orders ordered by date (this can change if we like)
-    $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
+    $user = '';
+    include('config/db_connect.php');
+    include('config/cookies.php');
+    $sql = '';
+    $sin = $user['SIN'];
+    if($user['PersonType'] == 'Client') {
+        $sql = "SELECT OrderNumber, OrderStatus FROM order_table WHERE Client_SIN = $sin";
+        //write query for all orders ordered by date (this can change if we like)
+    }
+    else{
+        $sql = 'SELECT OrderNumber, OrderStatus FROM order_table ORDER BY CreatedDate DESC';
+    }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
 

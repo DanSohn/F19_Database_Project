@@ -1,5 +1,7 @@
 <?php
-   include('config/db_connect.php');
+    $user='';
+    include('config/db_connect.php');
+    include('config/cookies.php');
 
    $length = $width = $quantity = $detail = $references = $success = "";
    $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '');
@@ -32,9 +34,10 @@
          $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
          $detail = mysqli_real_escape_string($conn, $_POST['detail']);
          $cost = $length * $width * $quantity;
+         $client = mysqli_real_escape_string($conn, $user['SIN']);
 
-         $sql = "INSERT INTO order_table(Cost, Length, Width, Quantity) VALUES
-         ('$cost', '$length', '$width', '$quantity')"; 
+         $sql = "INSERT INTO order_table(Cost, Length, Width, Quantity, Client_SIN) VALUES
+         ('$cost', '$length', '$width', '$quantity', '$client')";
 
          if(mysqli_query($conn, $sql)){
             $success = "Your order request has been sent! A manager may contact you for further details.";

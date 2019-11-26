@@ -1,10 +1,17 @@
 <?php
-
+    $user = '';
 	include('config/db_connect.php');
+    include('config/cookies.php');
+    $sql = '';
+    $sin = $user['SIN'];
+    if($user['PersonType'] == 'Client') {
+        $sql = "SELECT InvoiceNumber, OrderNumber, status FROM invoice_table WHERE C_SIN = $sin";
+        //write query for all invoices ordered by date (this can change if we like)
 
-	//write query for all invoices ordered by date (this can change if we like)
-	$sql = 'SELECT InvoiceNumber, OrderNumber, status FROM invoice_table ORDER BY date DESC';
-
+    }
+    else{
+        $sql = 'SELECT InvoiceNumber, OrderNumber, status FROM invoice_table ORDER BY date DESC';
+    }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
 

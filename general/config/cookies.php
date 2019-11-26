@@ -8,6 +8,5 @@ include('config/db_connect.php');
      $sql = "SELECT * FROM person_table WHERE Email = '$email'";
      $result = mysqli_query($conn, $sql);
      $user = mysqli_fetch_array($result);
-     mysqli_close($conn);
  }
  ?>
