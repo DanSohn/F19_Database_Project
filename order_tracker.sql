@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2019 at 10:18 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Nov 26, 2019 at 01:15 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -140,7 +140,7 @@ CREATE TABLE `invoice_table` (
 --
 
 INSERT INTO `invoice_table` (`InvoiceNumber`, `date`, `cost`, `status`, `C_SIN`, `OrderNumber`) VALUES
-(100000, '2019-11-23', '100', 'Not Paid', 999999999, 200000),
+(100000, '2019-11-23', '100', 'Paid', 999999999, 200000),
 (100001, '2019-11-23', '1500', 'Paid', 999999999, 200001);
 
 -- --------------------------------------------------------
@@ -165,14 +165,15 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`) VALUES
-(0, 12, 3, '2019-11-24', 2, 2, 0, 'Order Created'),
+(1, 12, 3, '2019-11-24', 2, 2, 0, 'Order Created'),
 (200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Complete'),
 (200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Complete'),
 (200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Order Created'),
 (200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Collected Supplies'),
 (200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Preparing Artwork'),
 (200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Artwork Complete'),
-(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Preparation');
+(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Preparation'),
+(200007, 324, 9, '2019-11-25', 6, 6, 0, 'Request Pending');
 
 -- --------------------------------------------------------
 
@@ -362,6 +363,22 @@ ALTER TABLE `supplier_table`
 --
 ALTER TABLE `supply_table`
   ADD PRIMARY KEY (`ItemID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `invoice_table`
+--
+ALTER TABLE `invoice_table`
+  MODIFY `InvoiceNumber` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100002;
+
+--
+-- AUTO_INCREMENT for table `order_table`
+--
+ALTER TABLE `order_table`
+  MODIFY `OrderNumber` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200008;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
