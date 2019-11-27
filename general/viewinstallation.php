@@ -5,17 +5,14 @@
     $sql = '';
     $sin = $user['SIN'];
     if($user['PersonType'] == 'Client') {
-
         $sql = "SELECT OrderNumber, Status
                 FROM installation_table AS i, order_table AS o
                 WHERE o.Client_SIN = $sin, o.OrderNumber = i.OrderNumber";
-        //write query for all invoices ordered by date (this can change if we like)
 
-    }
-    else{
-        $sql = 'SELECT OrderNumber, status
-                  FROM invoice_table
-                  ORDER BY date DESC';
+    } else {
+        $sql = "SELECT OrderNumber, Status
+                  FROM installation_table AS i JOIN order_table AS o ON o.OrderNumber = i.OrderNumber
+                  WHERE o.Client_SIN = $sin";
     }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
@@ -50,11 +47,11 @@
             </thread>
             <?php foreach ($installation as $one):?>
               <tr>
-                  <td class = "center"><?php echo htmlspecialchars($one['Installation']); ?></td>
+                  <td class = "center"><?php echo htmlspecialchars($one['OrderNumber']); ?></td>
                   <td class = "center"><?php echo htmlspecialchars($one['status']); ?></td>
                   <td class = "center">
-                      <?php if ($one['status'] == "Not Paid"): ?>
-                          <a href="settle_invoice.php?InvoiceNumber=<?php echo $one['Installation']?>" class = "btn btn-info">Request</a>
+                      <?php if ($one['status'] == "In Progress"): ?>
+                          <a href="#.php?InvoiceNumber=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
                       <?php endif; ?>
                   </td>
               </tr>

@@ -45,8 +45,7 @@
   				<li><a href ="contactus.php" class ="btn grey lighten-1 z-depth-1">Contact Us</a></li>
   			</ul>
   			<ul id="nav-mobile" class="right hide-on-small-and-down">
-  				<li><a href ="signup.php" class ="btn brand z-depth-1">FOR NOW: Sign up</a></li>
+  				<li><a href ="#" class ="btn brand z-depth-1">Random Button</a></li>
   			</ul>
   		</div>
   	</nav>
-  	
