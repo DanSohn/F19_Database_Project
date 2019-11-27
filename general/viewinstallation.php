@@ -4,15 +4,11 @@
     include('config/cookies.php');
     $sql = '';
     $sin = $user['SIN'];
-    if($user['PersonType'] == 'Client') {
-        $sql = "SELECT OrderNumber, Status
-                FROM installation_table AS i, order_table AS o
-                WHERE o.Client_SIN = $sin, o.OrderNumber = i.OrderNumber";
-
-    } else {
-        $sql = "SELECT OrderNumber, Status
-                  FROM installation_table AS i JOIN order_table AS o ON o.OrderNumber = i.OrderNumber
-                  WHERE o.Client_SIN = $sin";
+    if($user['PersonType'] == 'Client'){
+        $sql = "SELECT i.OrderNumber, i.Status FROM installation_table AS i, order_table AS o WHERE i.OrderNumber = o.OrderNumber AND o.Client_SIN = $sin";
+    }
+    else{
+        $sql = "SELECT OrderNumber, Status FROM installation_table ORDER BY Status";
     }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
@@ -48,9 +44,9 @@
             <?php foreach ($installation as $one):?>
               <tr>
                   <td class = "center"><?php echo htmlspecialchars($one['OrderNumber']); ?></td>
-                  <td class = "center"><?php echo htmlspecialchars($one['status']); ?></td>
+                  <td class = "center"><?php echo htmlspecialchars($one['Status']); ?></td>
                   <td class = "center">
-                      <?php if ($one['status'] == "In Progress"): ?>
+                      <?php if ($one['Status'] == "In Progress"): ?>
                           <a href="#.php?InvoiceNumber=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
                       <?php endif; ?>
                   </td>
