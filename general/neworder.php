@@ -4,7 +4,7 @@
     include('config/cookies.php');
 
    $length = $width = $quantity = $detail = $references = $success = $installation = "";
-   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '', 'installation' => '');
+   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '', 'installation' => '', 'substrate' => '');
 
    if(isset($_POST['request'])) {
       $length = htmlspecialchars($_POST['length']);
@@ -28,7 +28,9 @@
       if($installation =="0"){
          $errors['installation'] = 'Please specify whether an installation is required. <br />';
       }
-
+      if(empty($substrate)){
+         $errors['substrate'] = 'Please provide the substrate of the installation. <br />';
+      }
       if(empty($detail)){
          $errors['detail'] = 'Please provide details about your order. <br />';
       }
@@ -37,12 +39,14 @@
          $width = mysqli_real_escape_string($conn, $_POST['width']);
          $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
          $installation = mysqli_real_escape_string($conn, $_POST['installation']);
+         $substrate = mysqli_real_escape_string($conn, $_POST['substrate']);
          $detail = mysqli_real_escape_string($conn, $_POST['detail']);
          $cost = $length * $width * $quantity;
          $client = mysqli_real_escape_string($conn, $user['SIN']);
 
          $sql = "INSERT INTO order_table(Cost, Length, Width, Quantity, Client_SIN) VALUES
          ('$cost', '$length', '$width', '$quantity', '$client')";
+
 
          if(mysqli_query($conn, $sql)){
             $success = "Your order request has been sent! A manager may contact you for further details.";
@@ -100,6 +104,10 @@
            <option value="No" selected>No</option>
          </select>
          <div class="red-text"><?php echo $errors['installation'];?></div>
+
+         <label>Substrate for Installation:</label>
+            <textarea type = "text" name = "substrate" value = "<?php echo $substrate?>"placeholder="Provide substrate information of installation" tabindex="2"></textarea>
+            <div class="red-text"><?php echo $errors['substrate'];?></div>
 
          <label>Details:</label>
             <textarea type = "text" name = "detail" value = "<?php echo $detail?>"placeholder="Provide details about the design..." tabindex="5"></textarea>
