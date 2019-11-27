@@ -3,13 +3,14 @@
     include('config/db_connect.php');
     include('config/cookies.php');
 
-   $length = $width = $quantity = $detail = $references = $success = "";
-   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '');
-   
+   $length = $width = $quantity = $detail = $references = $success = $installation = "";
+   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '', 'installation' => '');
+
    if(isset($_POST['request'])) {
       $length = htmlspecialchars($_POST['length']);
       $width = htmlspecialchars($_POST['width']);
       $quantity = htmlspecialchars($_POST['quantity']);
+      $installation = htmlspecialchars($_POST['installation']);
       $detail = htmlspecialchars($_POST['detail']);
       $references = htmlspecialchars($_POST['references']);
 
@@ -24,6 +25,9 @@
       if($quantity =="0"){
          $errors['quantity'] = 'Please specify a quantity. <br />';
       }
+      if($installation =="0"){
+         $errors['installation'] = 'Please specify whether an installation is required. <br />';
+      }
 
       if(empty($detail)){
          $errors['detail'] = 'Please provide details about your order. <br />';
@@ -32,6 +36,7 @@
          $length = mysqli_real_escape_string($conn, $_POST['length']);
          $width = mysqli_real_escape_string($conn, $_POST['width']);
          $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
+         $installation = mysqli_real_escape_string($conn, $_POST['installation']);
          $detail = mysqli_real_escape_string($conn, $_POST['detail']);
          $cost = $length * $width * $quantity;
          $client = mysqli_real_escape_string($conn, $user['SIN']);
@@ -87,6 +92,15 @@
          </select>
          <div class="red-text"><?php echo $errors['quantity'];?></div>
 
+
+         <label>Installation Required:</label>
+         <select name = "installation" value = "<?php echo $installation?>" style="display: block;">
+           <option value="0" selected>------</option>
+           <option value="Yes" selected>Yes</option>
+           <option value="No" selected>No</option>
+         </select>
+         <div class="red-text"><?php echo $errors['installation'];?></div>
+
          <label>Details:</label>
             <textarea type = "text" name = "detail" value = "<?php echo $detail?>"placeholder="Provide details about the design..." tabindex="5"></textarea>
             <div class="red-text"><?php echo $errors['detail'];?></div>
@@ -105,4 +119,3 @@
    <?php  include('templates/footer.php');?>
 
  </html>
-

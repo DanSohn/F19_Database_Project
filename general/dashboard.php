@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include('config/db_connect.php');
 
 	if (isset($_POST['request'])){
@@ -9,6 +9,9 @@
 	}
 	if (isset($_POST['invoices'])){
 		header('Location: viewinvoice.php');
+	}
+	if (isset($_POST['installations'])){
+		header('Location: viewinstallation.php');
 	}
 
  ?>
@@ -36,6 +39,10 @@
 
             <br><div class="center">
                 <input type="submit" name="invoices" value = "view invoices" class= "btn grey z-depth-1" style = "width:300px; height:150px">
+            </div>
+
+						<br><div class="center">
+                <input type="submit" name="installations" value = "view installations" class= "btn blue z-depth-1" style = "width:300px; height:150px">
             </div>
         </div>
         </form>
