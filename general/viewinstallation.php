@@ -74,10 +74,10 @@
                       <a href="viewinstallation.php?OrderNumber=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Test</a>
                   </td>
                   <td class = "center">
-                      <?php if (($one['Status'] == 'In Progress') & ($user['PersonType']=='Client')): ?>
+                      <?php if (($one['Status'] == 'in progress') and ($user['PersonType']=='Client')): ?>
                           <a href="vieqinstallation.php?Request=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
-                      <?php elseif (($one['Status'] == 'in progress') & ($user['PersonType']=='Client')): ?>
-                          <a href="viewinstallation.php?Mark=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Mark as Complete</a>4
+                      <?php elseif (($one['Status'] == 'in progress') and ($user['PersonType']=='Employee')): ?>
+                          <a href="viewinstallation.php?Mark=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Mark as Complete</a>
                       <?php endif; ?>
                   </td>
               </tr>
