@@ -3,7 +3,7 @@
     include('config/db_connect.php');
     include('config/cookies.php');
 
-   $length = $width = $quantity = $detail = $references = $success = $installation = "";
+   $length = $width = $quantity = $detail = $references = $substrate = $success = $installation = "";
    $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '', 'installation' => '', 'substrate' => '');
 
    if(isset($_POST['request'])) {
@@ -11,6 +11,7 @@
       $width = htmlspecialchars($_POST['width']);
       $quantity = htmlspecialchars($_POST['quantity']);
       $installation = htmlspecialchars($_POST['installation']);
+      $substrate = htmlspecialchars($_POST['substrate']);
       $detail = htmlspecialchars($_POST['detail']);
       $references = htmlspecialchars($_POST['references']);
 
@@ -50,7 +51,7 @@
 
          if(mysqli_query($conn, $sql)){
             $success = "Your order request has been sent! A manager may contact you for further details.";
-            $length = $width = $quantity = $detail = $references = "";
+            $length = $width = $quantity = $detail = $substrate = $references = "";
          }else{
             echo 'query error: '.mysqli_error($conn);
          }
@@ -100,8 +101,8 @@
          <label>Installation Required:</label>
          <select name = "installation" value = "<?php echo $installation?>" style="display: block;">
            <option value="0" selected>------</option>
-           <option value="Yes" selected>Yes</option>
-           <option value="No" selected>No</option>
+           <option value="Yes">Yes</option>
+           <option value="No" >No</option>
          </select>
          <div class="red-text"><?php echo $errors['installation'];?></div>
 
