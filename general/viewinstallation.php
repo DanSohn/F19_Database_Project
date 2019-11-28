@@ -2,6 +2,31 @@
     $user = '';
 	include('config/db_connect.php');
     include('config/cookies.php');
+    //check GET request id param
+
+    if(isset($_GET['Request'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['Request']);
+        $sql = "UPDATE installation_table SET status = 'Installation Requested' WHERE OrderNumber = $OrderNumber";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: viewinstallation.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
+    if(isset($_GET['Mark'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['Mark']);
+        $sql = "UPDATE installation_table SET status = 'Installation Completed' WHERE OrderNumber = $OrderNumber";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: viewinstallation.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
+
     $sql = '';
     $sin = $user['SIN'];
     if($user['PersonType'] == 'Client'){
@@ -46,8 +71,13 @@
                   <td class = "center"><?php echo htmlspecialchars($one['OrderNumber']); ?></td>
                   <td class = "center"><?php echo htmlspecialchars($one['Status']); ?></td>
                   <td class = "center">
-                      <?php if ($one['Status'] == "In Progress"): ?>
-                          <a href="#.php?InvoiceNumber=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
+                      <a href="viewinstallation.php?OrderNumber=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Test</a>
+                  </td>
+                  <td class = "center">
+                      <?php if (($one['Status'] == 'In Progress') & ($user['PersonType']=='Client')): ?>
+                          <a href="vieqinstallation.php?Request=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
+                      <?php elseif (($one['Status'] == 'in progress') & ($user['PersonType']=='Client')): ?>
+                          <a href="viewinstallation.php?Mark=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Mark as Complete</a>4
                       <?php endif; ?>
                   </td>
               </tr>
