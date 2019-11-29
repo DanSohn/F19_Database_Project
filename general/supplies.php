@@ -56,7 +56,7 @@ include('config/cookies.php');
                         <option value="0" selected>Select</option>
                         <option value="5">5 years</option>
                         <option value ="10">10 years</option>
-                        <option value="15">15</option>
+                        <option value="15">15 years</option>
                     </select>
                 </div>
             </div>

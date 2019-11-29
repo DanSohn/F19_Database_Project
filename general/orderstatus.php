@@ -26,6 +26,41 @@
             echo 'query error: ' . mysqli_error($conn);
         }
 }
+    if(isset($_GET['design'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
+        $sql = "";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: vieworder.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
+
+    if(isset($_GET['prepared'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['prepared']);
+        $sql = "";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: vieworder.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
+
+    if(isset($_GET['complete'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['complete']);
+        $sql = "";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: vieworder.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
 
 	if(isset($_GET['OrderNumber'])){
 		$OrderNumber = mysqli_real_escape_string($conn, $_GET['OrderNumber']);
@@ -44,6 +79,22 @@
         //fetch result in array format
         $manager = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
+
+//        $orderNumber = $status['OrderNumber'];
+//        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
+//        $art = mysqli_query($conn, $sql);
+//        $row = mysqli_fetch_array($art);
+
+        $orderNumber = $status['OrderNumber'];
+        $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
+        $data = mysqli_query($conn, $sql);
+        $installation = "";
+        if(mysqli_num_rows($data) > 0){
+            $installation = "Yes";
+        }
+        else{
+            $installation = "No";
+        }
         mysqli_close($conn);
 
 
@@ -81,12 +132,15 @@
                     <td class = "center"><?php echo htmlspecialchars($status['Quantity']);?></td>
                 </tr>
         </table>
+
         <h5>Design:</h5>
-        <h6>Coming soon to a theatre near you.</h6>
-        <img src="" alt="">
+            <div id = 'img_div'>
+                <img src="<?php echo htmlspecialchars($row['Path']);?>">
+                <p><?php echo htmlspecialchars($row['DesignName']);?></p>
+            </div>
 
         <h5>Installation?</h5>
-        <h6>Yes or No</h6>
+        <h6><?php echo htmlspecialchars($installation);?></h6>
 
         <h5>Manager On File:</h5>
         <table class = "table">
@@ -113,6 +167,15 @@
     <?php if($status['OrderStatus'] == "Requested" and $user['PersonType'] == 'Manager'): ?>
         <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "approve" value = "approve" class = "green btn btn-info">Approve</a>
         <a href="orderstatus.php?reject=<?php echo $status['OrderNumber']?>" name = "reject" value = "reject" class = " red btn btn-info">Reject</a>
+    <?php endif;?>
+    <?php if($status['OrderStatus'] == "Approved" and $user['PersonType'] == 'Designer'): ?>
+        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
+    <?php endif;?>
+    <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
+        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "prepared" value = "prepared" class = "green btn btn-info">Mark Order As Prepared</a>
+    <?php endif;?>
+    <?php if($status['OrderStatus'] == "Order Prepared" and $user['PersonType'] == 'Manager'): ?>
+        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "complete" value = "complete" class = "green btn btn-info">Complete Order</a>
     <?php endif;?>
     <br></div>
 

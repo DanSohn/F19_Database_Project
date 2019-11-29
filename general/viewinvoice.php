@@ -51,7 +51,7 @@
                   <td class = "center"><?php echo htmlspecialchars($one['status']); ?></td>
                   <td class = "center">
                       <a href="invoicestatus.php?InvoiceNumber=<?php echo $one['InvoiceNumber'];?>" class = "btn btn-info">view</a>
-                      <?php if ($one['status'] == "Not Paid"): ?>
+                      <?php if ($one['status'] == "Not Paid" && $user['PersonType'] == "Client"): ?>
                           <a href="settle_invoice.php?InvoiceNumber=<?php echo $one['InvoiceNumber']?>" class = "btn btn-info">Settle</a>
                       <?php endif; ?>
                   </td>
