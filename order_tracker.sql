@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2019 at 10:55 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Nov 29, 2019 at 08:34 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,16 +33,17 @@ CREATE TABLE `artwork_table` (
   `size` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
   `format` varchar(255) NOT NULL,
-  `OrderNumber` int(6) UNSIGNED NOT NULL
+  `OrderNumber` int(6) UNSIGNED NOT NULL,
+  `Artwork_Status` enum('In Progress','Completed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `artwork_table`
 --
 
-INSERT INTO `artwork_table` (`D_SIN`, `size`, `color`, `format`, `OrderNumber`) VALUES
-(200000000, 'large', 'blue', 'capital letters', 200000),
-(200000000, 'small', 'red', 'underline text', 200005);
+INSERT INTO `artwork_table` (`D_SIN`, `size`, `color`, `format`, `OrderNumber`, `Artwork_Status`) VALUES
+(200000000, 'large', 'blue', 'capital letters', 200000, 'In Progress'),
+(200000000, 'small', 'red', 'underline text', 200005, 'In Progress');
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,7 @@ CREATE TABLE `installation_table` (
   `E_SIN` int(9) NOT NULL,
   `Location` varchar(255) NOT NULL,
   `Substrate` varchar(255) NOT NULL,
-  `Status` varchar(255) NOT NULL,
+  `Status` enum('Requested','In Progress','Complete') NOT NULL,
   `OrderNumber` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -118,8 +119,8 @@ CREATE TABLE `installation_table` (
 --
 
 INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `OrderNumber`) VALUES
-(0, 'Calgary', 'Wall', 'Not Started', 0),
-(300000000, 'Calgary', 'steel', 'in progress', 200006);
+(0, 'Calgary', 'Wall', 'Requested', 0),
+(300000000, 'Calgary', 'steel', 'In Progress', 200006);
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,7 @@ INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `O
 --
 
 CREATE TABLE `invoice_table` (
-  `InvoiceNumber` int(6) UNSIGNED NOT NULL,
+  `InvoiceNumber` int(6) UNSIGNED ZEROFILL NOT NULL,
   `date` varchar(255) NOT NULL,
   `cost` varchar(255) NOT NULL,
   `status` enum('Paid','Not Paid') NOT NULL DEFAULT 'Not Paid',
@@ -151,14 +152,14 @@ INSERT INTO `invoice_table` (`InvoiceNumber`, `date`, `cost`, `status`, `C_SIN`,
 --
 
 CREATE TABLE `order_table` (
-  `OrderNumber` int(6) UNSIGNED NOT NULL,
+  `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL,
   `Cost` int(10) UNSIGNED NOT NULL,
   `Quantity` int(3) UNSIGNED NOT NULL,
   `CreatedDate` date NOT NULL DEFAULT current_timestamp(),
   `length` int(3) UNSIGNED NOT NULL,
   `width` int(3) UNSIGNED NOT NULL,
   `M_SIN` int(9) UNSIGNED NOT NULL,
-  `OrderStatus` enum('Order Created','Collected Supplies','Preparing Artwork','Artwork Complete','In Preparation','Complete') NOT NULL DEFAULT 'Order Created',
+  `OrderStatus` enum('Requested','Approved','Rejected','In Progress','Completed') NOT NULL DEFAULT 'Requested',
   `Client_SIN` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -167,14 +168,14 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`, `Client_SIN`) VALUES
-(0, 12, 3, '2019-11-24', 2, 2, 0, 'Order Created', 0),
-(200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Complete', 999999999),
-(200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Complete', 999999999),
-(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Order Created', 999999999),
-(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Collected Supplies', 0),
-(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Preparing Artwork', 0),
-(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Artwork Complete', 0),
-(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Preparation', 999999999);
+(000001, 12, 3, '2019-11-24', 2, 2, 0, 'Approved', 999999999),
+(200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Completed', 999999999),
+(200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Completed', 999999999),
+(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Approved', 999999999),
+(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'In Progress', 999999999),
+(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'In Progress', 999999999),
+(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'In Progress', 999999999),
+(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Progress', 999999999);
 
 -- --------------------------------------------------------
 
@@ -252,15 +253,17 @@ INSERT INTO `requests_table` (`OrderNumber`, `E_SIN`) VALUES
 
 CREATE TABLE `supplier_table` (
   `name` varchar(255) NOT NULL,
-  `location` varchar(255) NOT NULL
+  `location` varchar(255) NOT NULL,
+  `Website` varchar(255) NOT NULL,
+  `Phone Number` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier_table`
 --
 
-INSERT INTO `supplier_table` (`name`, `location`) VALUES
-('Supplier Inc.', 'Calgary');
+INSERT INTO `supplier_table` (`name`, `location`, `Website`, `Phone Number`) VALUES
+('Supplier Inc.', 'Calgary', '', 0);
 
 -- --------------------------------------------------------
 
@@ -364,6 +367,22 @@ ALTER TABLE `supplier_table`
 --
 ALTER TABLE `supply_table`
   ADD PRIMARY KEY (`ItemID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `invoice_table`
+--
+ALTER TABLE `invoice_table`
+  MODIFY `InvoiceNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100002;
+
+--
+-- AUTO_INCREMENT for table `order_table`
+--
+ALTER TABLE `order_table`
+  MODIFY `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200007;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
