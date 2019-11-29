@@ -13,6 +13,9 @@
 	if (isset($_POST['installations'])){
 		header('Location: viewinstallation.php');
 	}
+if (isset($_POST['supplies'])){
+    header('Location: supplies.php');
+}
 
  ?>
 
@@ -41,8 +44,13 @@
                 <input type="submit" name="invoices" value = "view invoices" class= "btn grey z-depth-1" style = "width:300px; height:150px">
             </div>
 
-						<br><div class="center">
+            <br><div class="center">
                 <input type="submit" name="installations" value = "view installations" class= "btn blue z-depth-1" style = "width:300px; height:150px">
+            </div>
+            <br><div class="center">
+                <?php if ($user['PersonType'] == "Manager") :?>
+                    <input type="submit" name="supplies" value = "Order Supplies" class= "btn brand z-depth-1" style = "width:300px; height:150px">
+                <?php endif; ?>
             </div>
         </div>
         </form>

@@ -2,6 +2,31 @@
 	include('config/db_connect.php');
 
 	//check GET request id param
+
+    if(isset($_GET['approve'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['approve']);
+        $sql = "UPDATE order_table SET OrderStatus = 'Approved' WHERE OrderNumber = $OrderNumber";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: vieworder.php');
+        } else {
+            //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+    }
+
+    if(isset($_GET['reject'])) {
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['reject']);
+        $sql = "UPDATE order_table SET OrderStatus = 'Rejected' WHERE OrderNumber = $OrderNumber";
+        if (mysqli_query($conn, $sql)) {
+            //success
+            header('Location: vieworder.php');
+        } else {
+        //error
+            echo 'query error: ' . mysqli_error($conn);
+        }
+}
+
 	if(isset($_GET['OrderNumber'])){
 		$OrderNumber = mysqli_real_escape_string($conn, $_GET['OrderNumber']);
 
@@ -33,7 +58,7 @@
 <?php  include('config/cookies.php');?>
 <!-- footer style padding not added -->
 <h3>Order Number: <?php echo htmlspecialchars($status['OrderNumber']);?></h3>
-<div class="row justify-content-center white z-depth-2" style ="width:1040px">
+<div class="row justify-content-center white z-depth-2" style ="padding:20px; width:1040px";>
 	<?php if($status): ?>
         <h5>Created Date:</h5>
     <h6><?php echo htmlspecialchars($status['CreatedDate']);?></h6>
@@ -85,7 +110,11 @@
 		<h5>No such order exists.</h5>
 
 	<?php endif; ?>
-</div>
+    <?php if($status['OrderStatus'] == "Requested" and $user['PersonType'] == 'Manager'): ?>
+        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "approve" value = "approve" class = "green btn btn-info">Approve</a>
+        <a href="orderstatus.php?reject=<?php echo $status['OrderNumber']?>" name = "reject" value = "reject" class = " red btn btn-info">Reject</a>
+    <?php endif;?>
+    <br></div>
 
 <?php  include('templates/footer.php');?>
 

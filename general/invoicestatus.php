@@ -36,7 +36,7 @@
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
 <h3>Order Number: <?php echo htmlspecialchars($invoice['InvoiceNumber']);?></h3>
-<div class="row justify-content-center white z-depth-2" style ="width:1040px">
+<div class="row justify-content-center white z-depth-2"style ="padding:20px; width:1040px">
 	<?php if($invoice): ?>
         <h5>Created Date:</h5>
         <h6><?php echo htmlspecialchars($order['CreatedDate']);?></h6>
