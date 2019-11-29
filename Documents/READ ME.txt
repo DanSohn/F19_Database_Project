@@ -6,7 +6,7 @@ Order_Table:
     Length      - 3 digit integer value
     Width       - 3 digit integer value
     M_SIN       - 9 digit integer value
-    OrderStatus - Status of order (ENUM : Order Created, Collected Supplies, Preparing Artwork, Artwork Complete, In Preparation, Complete)
+    OrderStatus - Status of order (ENUM : Requested, Approved, Rejected, In Progress, Completed)
     
     
 Person_Table:
@@ -14,7 +14,7 @@ Person_Table:
     FName - 255 char varchar
     MName - 255 char varchar
     LName - 255 char varchar
-    PhoneNumber
+    PhoneNumber - 10 length int
     Email - 255 char varchar (UNIQUE)
     Address - 255 char varchar
     City - 255 char varchar
@@ -40,6 +40,8 @@ Employee_Table:
 Supplier_Table:
     Name - 255 char varchar (PK)
     Location - 255 char varchar
+    Website - 255 char varchar
+    Phone Number - 10 length int
     
 Supply_Table:
     SupplierName - 255 char varchar (PK)
@@ -49,6 +51,7 @@ Supply_Table:
     Size - 255 char varchar
     Color - 255 char varchar
     Durability - 255 char varchar
+    Status - (Ready, Complete)? not implemented
     M_SIN - 9 digit integer value
     
 Collects_From_Table:
@@ -59,7 +62,7 @@ Installation_Table:
     E_SIN - 9 digit integer value (PK)
     Location - 255 char varchar 
     Substrate - 255 char varchar 
-    Status - 255 char varchar 
+    Status - (Requested, In Progress, Completed)
     OrderNumber - 6 digit integer value
     
     
@@ -80,6 +83,7 @@ Artwork_Table:
     Size - 255 char varchar
     Color - 255 char varchar
     Format - 255 char varchar
+    Artwork_Status - Status of Artwork (In Progress, Completed)
     OrderNumber - 6 digit integer value
     
 Invoice_Table:
