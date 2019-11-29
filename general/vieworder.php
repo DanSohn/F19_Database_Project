@@ -49,7 +49,7 @@
                     <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                     <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
                     <td class = "center">
-                        <a href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
+                        <a href="orderstatus.php?orderNow=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
                     </td>
                 </tr>
             <?php endif; ?>

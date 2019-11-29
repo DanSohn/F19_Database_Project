@@ -114,9 +114,6 @@
         <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "approve" value = "approve" class = "green btn btn-info">Approve</a>
         <a href="orderstatus.php?reject=<?php echo $status['OrderNumber']?>" name = "reject" value = "reject" class = " red btn btn-info">Reject</a>
     <?php endif;?>
-    <?php if($status['OrderStatus'] == "Approved" and $user['PersonType'] == 'Manager'): ?>
-    <a href="supplies.php?supplies=<?php echo $status['OrderNumber']?>" name = "supplies" value = "supplies" class = "green btn btn-info">Order Supplies</a>
-    <?php endif;?>
     <br></div>
 
 <?php  include('templates/footer.php');?>
