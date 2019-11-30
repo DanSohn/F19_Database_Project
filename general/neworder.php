@@ -45,8 +45,8 @@
            $cost = $length * $width * $quantity;
            $client = mysqli_real_escape_string($conn, $user['SIN']);
 
-           $sql = "INSERT INTO order_table(Cost, Length, Width, Quantity, Client_SIN) VALUES
-         ('$cost', '$length', '$width', '$quantity', '$client')";
+           $sql = "INSERT INTO order_table(Cost, Length, Width, Quantity, Client_SIN, M_SIN) VALUES
+         ('$cost', '$length', '$width', '$quantity', '$client', '100000000')";
 
 
            if (mysqli_query($conn, $sql)) {
@@ -61,7 +61,7 @@
 
                $city = $user["City"];
                //echo $user['City'];
-               $sql = "INSERT INTO installation_table(E_SIN,Location, Substrate, OrderNumber) VALUES ('10000','$city','$substrate', '$number')";
+               $sql = "INSERT INTO installation_table(E_SIN,Location, Substrate, OrderNumber) VALUES ('300000000','$city','$substrate', '$number')";
                mysqli_query($conn, $sql);
                $substrate = "";
            }
