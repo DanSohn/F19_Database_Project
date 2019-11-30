@@ -36,7 +36,7 @@
 }
     if(isset($_GET['design'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
-        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed' WHERE OrderNumber = $OrderNumber";
+        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $user['SIN'] WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             ////////////////////////////////////// HOW TO PASS USER SIN TO HERE????? /////////////////////////////
@@ -54,7 +54,7 @@
             
             
             //
-            $sql = "UPDATE order_table SET OrderStatus = 'Design Complete', D_SIN = $user['SIN'] WHERE OrderNumber = $OrderNumber";
+            $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
             
             if (mysqli_query($conn, $sql)){
                 header('Location: vieworder.php');
