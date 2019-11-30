@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 04:28 PM
+-- Generation Time: Nov 30, 2019 at 05:24 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -107,7 +107,7 @@ INSERT INTO `has_table` (`InvoiceNumber`, `OrderNumber`) VALUES
 --
 
 CREATE TABLE `installation_table` (
-  `E_SIN` int(9) NOT NULL,
+  `E_SIN` int(9) UNSIGNED NOT NULL,
   `Location` varchar(255) NOT NULL,
   `Substrate` varchar(255) NOT NULL,
   `Status` enum('Requested','In Progress','Complete') NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `installation_table` (
 --
 
 INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `OrderNumber`) VALUES
-(0, 'Calgary', 'Wall', 'Requested', 0),
+(300000000, 'Calgary', 'Wall', 'Requested', 200003),
 (300000000, 'Calgary', 'steel', 'In Progress', 200006);
 
 -- --------------------------------------------------------
@@ -325,7 +325,7 @@ ALTER TABLE `has_table`
 -- Indexes for table `installation_table`
 --
 ALTER TABLE `installation_table`
-  ADD PRIMARY KEY (`E_SIN`);
+  ADD PRIMARY KEY (`OrderNumber`);
 
 --
 -- Indexes for table `invoice_table`

@@ -2,21 +2,52 @@
 	include('config/db_connect.php');
 
 	//check GET request id param
-	if(isset($_GET['InvoiceNumber'])){
-		$InvoiceNumber = mysqli_real_escape_string($conn, $_GET['InvoiceNumber']);
+	if(isset($_GET['OrderNumber'])){
+		$OrderNumber = mysqli_real_escape_string($conn, $_GET['OrderNumber']);
 
 		//make sql
-		$sql = "SELECT * FROM invoice_table WHERE InvoiceNumber=$InvoiceNumber";
+		$sql = "SELECT * FROM installation_table WHERE OrderNumber=$OrderNumber";
 
 		//get the query result
 		$result = mysqli_query($conn, $sql);
 
 		//fetch result in array format
-		$invoice = mysqli_fetch_assoc($result);
+		$installations = mysqli_fetch_assoc($result);
 
 		mysqli_free_result($result);
+        
+        
+        
+        //employee responsible for the installation
+        $emp_SIN = $installations['E_SIN'];
+        $sql = "SELECT * FROM person_table WHERE SIN=$emp_SIN";
+        //get the query result
+        $result = mysqli_query($conn, $sql);
+        //fetch result in array format
+        $employee = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+
+
+        //end of employee
+        
+        
+        
+        //beginning of ORDER information
+        
+        $sql = "SELECT * FROM order_table WHERE OrderNumber=$OrderNumber";
+
+        //get the query result
+        $result = mysqli_query($conn, $sql);
+        //fetch result in array format
+        $order = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
+
+        //end of ORDER inforamation
+        
+        
+        
         //grabbing the client information
-        $clientSin = $invoice['C_SIN'];
+        $clientSin = $order['Client_SIN'];
         $sql = "SELECT * FROM person_table WHERE SIN=$clientSin";
         $result = mysqli_query($conn, $sql);
         $client = mysqli_fetch_assoc($result);
@@ -25,27 +56,8 @@
         
         //end of client information
         
-        
-        $orderNumber = $invoice['OrderNumber'];
-        $sql = "SELECT * FROM order_table WHERE OrderNumber=$orderNumber";
 
-        //get the query result
-        $result = mysqli_query($conn, $sql);
-
-        //fetch result in array format
-        $order = mysqli_fetch_assoc($result);
-
-        mysqli_free_result($result);
-
-        $sql = "SELECT * FROM installation_table WHERE OrderNumber=$orderNumber";
-        $result = mysqli_query($conn, $sql);
-        
-        // check if there is any installation for the order number
-        $install = "Yes";
-        if (mysqli_num_rows($result) == 0) { 
-            $install = "No";
-        }
-        mysqli_free_result($result);
+  
 		mysqli_close($conn);
 
 	}
@@ -56,11 +68,9 @@
 
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
-<h3>Order Number: <?php echo htmlspecialchars($orderNumber);?> (<?php echo htmlspecialchars($invoice['status']);?>)</h3>
+<h4>Order Number: <?php echo htmlspecialchars($OrderNumber);?></h4>
 <div class="row justify-content-center white z-depth-2"style ="padding:20px; width:1040px">
-	<?php if($invoice): ?>
-        <h5>Created Date:</h5>
-        <h6><?php echo htmlspecialchars($order['CreatedDate']);?></h6>
+	<?php if($installations): ?>
 
         <h5>Client Details:</h5>
         <table class = "table">
@@ -106,38 +116,23 @@
             </tr>
         </table>
 
-        <h5>Order Details:</h5>
+        <h5>Installation Details:</h5>
         <table class = "table">
             <thread>
                 <tr>
-                    <th class ="center">Length</th>
-                    <th class ="center">Width</th>
-                    <th class ="center">Quantity</th>
-                    <th class ="center">Total</th>
+                    <th class ="center">Employee Responsible</th>
+                    <th class ="center">Location</th>
+                    <th class ="center">Substrate</th>
+                    <th class ="center">Status</th>
                 </tr>
             </thread>
             <tr>
-                <td class = "center"><?php echo htmlspecialchars($order['length']);?>"</td>
-                <td class = "center"><?php echo htmlspecialchars($order['width']);?>"</td>
-                <td class = "center"><?php echo htmlspecialchars($order['Quantity']);?></td>
-                <td class = "center">$<?php echo htmlspecialchars($order['Cost']);?></td>
+                <td class = "center"><?php echo htmlspecialchars($employee['FName']);?></td>
+                <td class = "center"><?php echo htmlspecialchars($installations['Location']);?></td>
+                <td class = "center"><?php echo htmlspecialchars($installations['Substrate']);?></td>
+                <td class = "center"><b><?php echo htmlspecialchars($installations['Status']);?></b></td>
             </tr>
         </table>
-
-        <h5>Installation Required:</h5>
-        <h6><?php echo htmlspecialchars($install);?></h6>
-
-        <h5>Comment Section:</h5>
-        <p>Thank you for your business!</p>
-
-        <h5>Payment Section:</h5>
-        <?php if($invoice['status'] == 'Not Paid'): ?>
-            <a href="settle_invoice.php?InvoiceNumber=<?php echo $invoice['InvoiceNumber']?>" class = "btn btn-info">Settle now</a>
-        <?php else: ?>
-            <h6>Paid</h6>
-        <?php endif; ?>
-	<?php else: ?>
-		<h5>Order not completed, invoice does not exist yet.</h5>
 
 	<?php endif; ?>
 </div>
