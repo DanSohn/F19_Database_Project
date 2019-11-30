@@ -1,5 +1,7 @@
 <?php
 	include('config/db_connect.php');
+	include('config/cookies.php');
+	$sin = $user['SIN'];
 
 	//check GET request id param
 
@@ -36,7 +38,7 @@
 }
     if(isset($_GET['design'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
-        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $user['SIN'] WHERE OrderNumber = $OrderNumber";
+        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             ////////////////////////////////////// HOW TO PASS USER SIN TO HERE????? /////////////////////////////

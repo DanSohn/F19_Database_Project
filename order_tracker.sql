@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 08:14 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Nov 30, 2019 at 09:02 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,9 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `artwork_table` (
   `D_SIN` int(9) UNSIGNED NOT NULL,
-  `size` varchar(255) NOT NULL,
-  `color` varchar(255) NOT NULL,
-  `format` varchar(255) NOT NULL,
+  `Path` varchar(255) NOT NULL,
   `OrderNumber` int(6) UNSIGNED NOT NULL,
   `Artwork_Status` enum('In Progress','Completed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -41,9 +39,10 @@ CREATE TABLE `artwork_table` (
 -- Dumping data for table `artwork_table`
 --
 
-INSERT INTO `artwork_table` (`D_SIN`, `size`, `color`, `format`, `OrderNumber`, `Artwork_Status`) VALUES
-(200000000, 'large', 'blue', 'capital letters', 200000, 'In Progress'),
-(200000000, 'small', 'red', 'underline text', 200005, 'In Progress');
+INSERT INTO `artwork_table` (`D_SIN`, `Path`, `OrderNumber`, `Artwork_Status`) VALUES
+(200000000, '', 200000, 'In Progress'),
+(200000000, '', 200005, 'Completed'),
+(200000000, '', 200008, 'Completed');
 
 -- --------------------------------------------------------
 
@@ -172,12 +171,12 @@ CREATE TABLE `order_table` (
 INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`, `Client_SIN`) VALUES
 (200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Completed', 999999999),
 (200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Completed', 999999999),
-(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Approved', 999999999),
+(200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Design Complete', 999999999),
 (200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Order Prepared', 999999999),
-(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Approved', 999999999),
-(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Approved', 999999999),
+(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Design Complete', 999999999),
+(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Design Complete', 999999999),
 (200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'Order Prepared', 999999999),
-(200008, 160, 4, '2019-11-30', 5, 8, 100000000, 'Requested', 999999999),
+(200008, 160, 4, '2019-11-30', 5, 8, 100000000, 'Design Complete', 999999999),
 (200009, 1000, 10, '2019-11-30', 10, 10, 100000000, 'Design Complete', 999999999),
 (200010, 576, 16, '2019-11-30', 12, 3, 100000000, 'Rejected', 999999999);
 
