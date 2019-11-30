@@ -25,6 +25,16 @@
         $order = mysqli_fetch_assoc($result);
 
         mysqli_free_result($result);
+
+        $sql = "SELECT * FROM installation_table WHERE OrderNumber=$orderNumber";
+        $result = mysqli_query($conn, $sql);
+        
+        // check if there is any installation for the order number
+        $install = "Yes";
+        if (mysqli_num_rows($result) != 0) { 
+            $install = "No";
+        }
+        mysqli_free_result($result);
 		mysqli_close($conn);
 
 	}
@@ -35,7 +45,7 @@
 
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
-<h3>Order Number: <?php echo htmlspecialchars($invoice['InvoiceNumber']);?></h3>
+<h3>Order Number: <?php echo htmlspecialchars($orderNumber);?> (<?php echo htmlspecialchars($invoice['status']);?>)</h3>
 <div class="row justify-content-center white z-depth-2"style ="padding:20px; width:1040px">
 	<?php if($invoice): ?>
         <h5>Created Date:</h5>
@@ -103,8 +113,8 @@
             </tr>
         </table>
 
-        <h5>Installation?</h5>
-        <h6>Yes or No</h6>
+        <h5>Installation Required:</h5>
+        <h6><?php echo htmlspecialchars($install);?></h6>
 
         <h5>Comment Section:</h5>
         <p>Thank you for your business!</p>

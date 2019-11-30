@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2019 at 08:34 AM
+-- Generation Time: Nov 30, 2019 at 04:28 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -263,6 +263,7 @@ CREATE TABLE `supplier_table` (
 --
 
 INSERT INTO `supplier_table` (`name`, `location`, `Website`, `Phone Number`) VALUES
+('Dans Supplies', 'Toronto', 'dansohn.github.io', 1000001258),
 ('Supplier Inc.', 'Calgary', '', 0);
 
 -- --------------------------------------------------------
@@ -288,9 +289,9 @@ CREATE TABLE `supply_table` (
 --
 
 INSERT INTO `supply_table` (`ItemID`, `SupplierName`, `brand`, `type`, `cost`, `size`, `color`, `durability`, `M_SIN`) VALUES
-(10001, 'Supplier Inc.', 'Guess', 'Dress Shirts', 80, 'large', 'white', 'medium', 100000000),
-(10002, 'Supplier Inc.', 'Fossil', 'Watch', 200, 'small', 'black', 'hella lots', 100000000),
-(10003, 'Supplier Inc.', 'Dan the Store Man', 'Human', 10, 'large', 'green', 'brittle', 100000000);
+(10001, 'Supplier Inc.', '3M', 'Dress Shirts', 80, '6', 'white', '5', 100000000),
+(10002, 'Supplier Inc.', 'Avery', 'Watch', 200, '12', 'black', '10', 100000000),
+(10003, 'Dans Supplies', '3M', 'Human', 1000, '48', 'Yellow', '15', 100000000);
 
 --
 -- Indexes for dumped tables
