@@ -8,7 +8,15 @@
         $sql = "UPDATE order_table SET OrderStatus = 'Approved' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
-            header('Location: vieworder.php');
+            //will also create an entry into artwork stating that artwork is in progress
+            $sql = "INSERT INTO artwork_table(OrderNumber, Artwork_Status) VALUES('$OrderNumber','In Progress')";
+            if (mysqli_query($conn, $sql)){
+                
+                header('Location: vieworder.php');
+            }else{
+                //error
+                echo 'query error: ' . mysqli_error($conn);
+            }
         } else {
             //error
             echo 'query error: ' . mysqli_error($conn);
@@ -28,10 +36,32 @@
 }
     if(isset($_GET['design'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
-        $sql = "";
+        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
-            header('Location: vieworder.php');
+            ////////////////////////////////////// HOW TO PASS USER SIN TO HERE????? /////////////////////////////
+            
+            
+            
+            
+            
+            
+            
+            //help
+            
+            
+            
+            
+            
+            //
+            $sql = "UPDATE order_table SET OrderStatus = 'Design Complete', D_SIN = $user['SIN'] WHERE OrderNumber = $OrderNumber";
+            
+            if (mysqli_query($conn, $sql)){
+                header('Location: vieworder.php');
+            }else{
+                //error
+                echo 'query error: ' . mysqli_error($conn);
+            }
         } else {
             //error
             echo 'query error: ' . mysqli_error($conn);
@@ -40,7 +70,7 @@
 
     if(isset($_GET['prepared'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['prepared']);
-        $sql = "";
+        $sql = "UPDATE order_table SET OrderStatus = 'Order Prepared' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             header('Location: vieworder.php');
@@ -52,7 +82,7 @@
 
     if(isset($_GET['complete'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['complete']);
-        $sql = "";
+        $sql = "UPDATE order_table SET OrderStatus = 'Completed' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             header('Location: vieworder.php');
@@ -169,13 +199,13 @@
         <a href="orderstatus.php?reject=<?php echo $status['OrderNumber']?>" name = "reject" value = "reject" class = " red btn btn-info">Reject</a>
     <?php endif;?>
     <?php if($status['OrderStatus'] == "Approved" and $user['PersonType'] == 'Designer'): ?>
-        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
+        <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
     <?php endif;?>
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
-        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "prepared" value = "prepared" class = "green btn btn-info">Mark Order As Prepared</a>
+        <a href="orderstatus.php?prepared=<?php echo $status['OrderNumber']?>" name = "prepared" value = "prepared" class = "green btn btn-info">Mark Order As Prepared</a>
     <?php endif;?>
     <?php if($status['OrderStatus'] == "Order Prepared" and $user['PersonType'] == 'Manager'): ?>
-        <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "complete" value = "complete" class = "green btn btn-info">Complete Order</a>
+        <a href="orderstatus.php?complete=<?php echo $status['OrderNumber']?>" name = "complete" value = "complete" class = "green btn btn-info">Complete Order</a>
     <?php endif;?>
     <br></div>
 

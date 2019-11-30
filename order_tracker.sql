@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 05:24 PM
+-- Generation Time: Nov 30, 2019 at 08:14 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -110,7 +110,7 @@ CREATE TABLE `installation_table` (
   `E_SIN` int(9) UNSIGNED NOT NULL,
   `Location` varchar(255) NOT NULL,
   `Substrate` varchar(255) NOT NULL,
-  `Status` enum('Requested','In Progress','Complete') NOT NULL,
+  `Status` enum('Requested','Complete') NOT NULL DEFAULT 'Requested',
   `OrderNumber` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,7 +120,9 @@ CREATE TABLE `installation_table` (
 
 INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `OrderNumber`) VALUES
 (300000000, 'Calgary', 'Wall', 'Requested', 200003),
-(300000000, 'Calgary', 'steel', 'In Progress', 200006);
+(300000000, 'Calgary', 'steel', 'Complete', 200006),
+(300000000, 'client city', 'Table', 'Requested', 200008),
+(300000000, 'client city', 'Wall', 'Requested', 200009);
 
 -- --------------------------------------------------------
 
@@ -159,7 +161,7 @@ CREATE TABLE `order_table` (
   `length` int(3) UNSIGNED NOT NULL,
   `width` int(3) UNSIGNED NOT NULL,
   `M_SIN` int(9) UNSIGNED NOT NULL,
-  `OrderStatus` enum('Requested','Approved','Rejected','In Progress','Completed') NOT NULL DEFAULT 'Requested',
+  `OrderStatus` enum('Requested','Approved','Rejected','Design Complete','Order Prepared','Completed') NOT NULL DEFAULT 'Requested',
   `Client_SIN` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -168,14 +170,16 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `length`, `width`, `M_SIN`, `OrderStatus`, `Client_SIN`) VALUES
-(000001, 12, 3, '2019-11-24', 2, 2, 0, 'Approved', 999999999),
 (200000, 100, 3, '2019-11-20', 10, 5, 100000000, 'Completed', 999999999),
 (200001, 1500, 100, '2019-11-21', 20, 10, 100000000, 'Completed', 999999999),
 (200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Approved', 999999999),
-(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'In Progress', 999999999),
-(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'In Progress', 999999999),
-(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'In Progress', 999999999),
-(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'In Progress', 999999999);
+(200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Order Prepared', 999999999),
+(200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Approved', 999999999),
+(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Approved', 999999999),
+(200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'Order Prepared', 999999999),
+(200008, 160, 4, '2019-11-30', 5, 8, 100000000, 'Requested', 999999999),
+(200009, 1000, 10, '2019-11-30', 10, 10, 100000000, 'Design Complete', 999999999),
+(200010, 576, 16, '2019-11-30', 12, 3, 100000000, 'Rejected', 999999999);
 
 -- --------------------------------------------------------
 
@@ -204,8 +208,10 @@ CREATE TABLE `person_table` (
 INSERT INTO `person_table` (`SIN`, `FName`, `MName`, `LName`, `PhoneNumber`, `Email`, `Address`, `City`, `PostalCode`, `Password`, `PersonType`) VALUES
 (0, 'admin', 'root', 'admin', 0, 'admin', 'admin', 'admin', 'a1aa1a', '1234', 'Manager'),
 (100000000, 'Peter', 'Kyoung Hwan', 'Namkoong', 4039039827, 'peternamkoong@gmail.com', '148 Wentworth Close SW', 'Calgary', 'T3H 4W1', '1234', 'Manager'),
-(200000000, 'Panagiota', 'THE GREEK', 'Fytopoulou', 7809130497, 'panagiota.fytopoulou@gmail.com', '808 Willingdon Blvd SE', 'Calgary', 'T2J 2B4', '1234', 'Designer'),
-(300000000, 'Daniel', '', 'Sohn', 403123234, 'daniel@gmail.com', '123 dragon city SW', 'Calgary', 'T2W 3W3', '1234', 'Employee'),
+(200000000, 'designer', 'design', 'designer', 1234567890, 'designer', 'design st. NW', 'Calgary', 'D3S I5N', '1234', 'Designer'),
+(200000001, 'Panagiota', 'THE GREEK', 'Fytopoulou', 7809130497, 'panagiota.fytopoulou@gmail.com', '808 Willingdon Blvd SE', 'Calgary', 'T2J 2B4', '1234', 'Designer'),
+(300000000, 'employee', 'emp', 'loyee', 1234567890, 'emp', 'emp st SW', 'Toronto', 's1s s2d', '1234', 'Employee'),
+(300000001, 'Daniel', '', 'Sohn', 403123234, 'daniel@gmail.com', '123 dragon city SW', 'Calgary', 'T2W 3W3', '1234', 'Employee'),
 (999999998, 'Jalal', '', 'Kawash', 4030000000, 'jalal.kawash@ucalgary.ca', '471 database st.', 'Calgary', 't1a2c6', '1234', 'Client'),
 (999999999, 'client', 'client', 'client', 1001001000, 'client', 'client st', 'client city', 'client', '1234', 'Client');
 
@@ -383,7 +389,7 @@ ALTER TABLE `invoice_table`
 -- AUTO_INCREMENT for table `order_table`
 --
 ALTER TABLE `order_table`
-  MODIFY `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200007;
+  MODIFY `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200011;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

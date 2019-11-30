@@ -49,7 +49,7 @@
                     <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                     <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
                     <td class = "center">
-                        <a href="orderstatus.php?orderNow=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
+                        <a href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
                     </td>
                 </tr>
             <?php endif; ?>
@@ -141,7 +141,7 @@
                 </tr>
             </thread>
             <?php foreach ($orders as $order):?>
-                <?php if($order['OrderStatus'] == 'Prepared'):?>
+                <?php if($order['OrderStatus'] == 'Order Prepared'):?>
                     <tr>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
@@ -190,7 +190,7 @@
             </tr>
         </thread>
         <?php foreach ($orders as $order):?>
-            <?php if($order['OrderStatus'] == 'Complete'):?>
+            <?php if($order['OrderStatus'] == 'Completed'):?>
                 <tr>
                     <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                     <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
