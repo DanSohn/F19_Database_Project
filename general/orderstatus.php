@@ -1,4 +1,6 @@
 <?php
+    define ('SITE_ROOT', realpath(dirname(__FILE__)));
+
 	include('config/db_connect.php');
 	include('config/cookies.php');
 	$sin = $user['SIN'];
@@ -35,38 +37,43 @@
       }
 	}
 
-  if(isset($_GET['design'])) {
+    if(isset($_GET['design'])) {
 		// get designer sin
 		$sin = $user['SIN'];
 		// wanna make sure its the right order, so get that
-    $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
 		// specify file: Here is error for whatever reason
-		echo $_FILES['image'];
+		//echo $_FILES['image'];
 		if(isset($_FILES['image'])){
 			$image = $_FILES['image']['name'];
 			// image file directory
-			$target = "images/".basename($image);
+			$target = '\images/' . basename($image);
 			echo $target;
+            echo "<br>";
 			// update the artwork table - but it never works? Query error apparently
-	    $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath=$target WHERE OrderNumber = $OrderNumber";
-	    if (mysqli_query($conn, $sql)) {
-				// move the file now and everything fails in here..
-				if (move_uploaded_file(($_FILES['name']['temp_name']), $target)) {
-					// update the table again to
-					$sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin , ImagePath=$target WHERE OrderNumber = $OrderNumber";
-					mysqli_query($conn, $sql);
+            $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath='$target' WHERE OrderNumber = $OrderNumber";
+            echo $sql . "<br>";
+            if (mysqli_query($conn, $sql)) {
+                //echo "success";
+                // move the file now and everything fails in here..
+                echo SITE_ROOT . $target;
+                move_uploaded_file(($_FILES['image']['tmp_name']), SITE_ROOT . $target);
 
-					$sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
-					if (mysqli_query($conn, $sql)){
-			        header('Location: vieworder.php');
-			    }else{
-						echo 'query error: ' . mysqli_error($conn);
-					}
-				}
-			}
-		}
-		$result = mysqli_query($conn, "SELECT * FROM artwork_table");
-  }
+                $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
+                
+                if (mysqli_query($conn, $sql)){
+                    header('Location: vieworder.php');
+                }else{
+                    //error
+                    echo 'query error: ' . mysqli_error($conn);
+                }
+
+            } else {
+                //error
+                echo 'query error: ' . mysqli_error($conn);
+            }
+        }
+    }
 
 
 
@@ -211,13 +218,15 @@
 		      echo "</div>";
 		    }
 		  ?>
-		  <form method="POST" enctype="multipart/form-data">
-		  	<input type="hidden" name="size" value="1000000">
+		  <form method="POST" action="orderstatus.php?design=<?php echo $status['OrderNumber'];?>" enctype="multipart/form-data" >
+		  	<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 		  	<div>
-		  	  <input type="file" name="image">
+		  	  <input type="file" name="image"><br><br>
+              
+              <input type="submit" name="design" value="Submit Designs" class = "green btn btn-info">
 		  	</div>
 		  </form>
-        <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
+        <!--<a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>-->
     <?php endif;?>
 
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
