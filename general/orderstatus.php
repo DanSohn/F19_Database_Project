@@ -43,8 +43,8 @@
 				$image = $_FILES['image']['name'];
 				// image file directory
 				$target = "images/".basename($image);
-				//$sql = "INSERT INTO artwork_table VALUES ('$sin','$image','$OrderNumber','Complete')";
-        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath=$image WHERE OrderNumber = $OrderNumber";
+
+        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath=$target WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
 
@@ -111,10 +111,10 @@
         $manager = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
 
-//        $orderNumber = $status['OrderNumber'];
-//        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
-//        $art = mysqli_query($conn, $sql);
-//        $row = mysqli_fetch_array($art);
+       $orderNumber = $status['OrderNumber'];
+        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
+        $art = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_array($art);
 
         $orderNumber = $status['OrderNumber'];
         $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
@@ -186,9 +186,13 @@
         </table>
 
 				<h5>Design:</h5>
-            <div id = 'img_div'>
-                <img src="<?php echo htmlspecialchars($row['Path']);?>">
-                <p><?php echo htmlspecialchars($row['DesignName']);?></p>
+            <div id = 'NotAvailable'>
+							<?php if ($status['OrderStatus']!="Design Complete"):?>
+								<img src="./NotAvailable.png" style="width=100%">
+							<?php elseif ($status['OrderNumber']=="Design Complete"):?> {
+								<img src="<?php echo htmlspecialchars($row['Path']);?>">
+                <p><?php echo htmlspecialchars($row['DesignName']);?></p>}
+							<?php endif;?>
             </div>
 
 	<?php else: ?>
