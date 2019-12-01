@@ -44,7 +44,7 @@
  	<?php if(isset($_COOKIE['uname'])):?>
  		<?php header('location:index.php'); ?>
 	<?php endif; ?>
-	
+
     <!-- footer style not added -->
 	<section class="container grey-text">
 		<h4 class="center">Log In</h4>

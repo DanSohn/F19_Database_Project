@@ -1,10 +1,17 @@
 <?php
-
+    $user = '';
 	include('config/db_connect.php');
+    include('config/cookies.php');
+    $sql = '';
+    $sin = $user['SIN'];
+    if($user['PersonType'] == 'Client') {
+        $sql = "SELECT InvoiceNumber, OrderNumber, status FROM invoice_table WHERE C_SIN = $sin";
+        //write query for all invoices ordered by date (this can change if we like)
 
-	//write query for all invoices ordered by date (this can change if we like)
-	$sql = 'SELECT InvoiceNumber, OrderNumber, status FROM invoice_table ORDER BY date DESC';
-
+    }
+    else{
+        $sql = 'SELECT InvoiceNumber, OrderNumber, status FROM invoice_table ORDER BY date DESC';
+    }
 	//make query & get result
 	$result = mysqli_query($conn, $sql);
 
@@ -44,8 +51,8 @@
                   <td class = "center"><?php echo htmlspecialchars($one['status']); ?></td>
                   <td class = "center">
                       <a href="invoicestatus.php?InvoiceNumber=<?php echo $one['InvoiceNumber'];?>" class = "btn btn-info">view</a>
-                      <?php if ($one['status'] == "Not Paid"): ?>
-                          <a href="settle_invoice.php?InvoiceNumber = <?php echo $one['InvoiceNumber'];?>" class = "btn btn-info">settle</a>
+                      <?php if ($one['status'] == "Not Paid" && $user['PersonType'] == "Client"): ?>
+                          <a href="settle_invoice.php?InvoiceNumber=<?php echo $one['InvoiceNumber']?>" class = "btn btn-info">Settle</a>
                       <?php endif; ?>
                   </td>
               </tr>
