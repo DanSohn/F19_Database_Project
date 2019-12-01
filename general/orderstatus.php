@@ -1,73 +1,85 @@
 <?php
+    define ('SITE_ROOT', realpath(dirname(__FILE__)));
+
 	include('config/db_connect.php');
 	include('config/cookies.php');
 	$sin = $user['SIN'];
 
 	//check GET request id param
+  if(isset($_GET['approve'])) {
+    $OrderNumber = mysqli_real_escape_string($conn, $_GET['approve']);
+    $sql = "UPDATE order_table SET OrderStatus = 'Approved' WHERE OrderNumber = $OrderNumber";
+    if (mysqli_query($conn, $sql)) {
+      //success
+      //will also create an entry into artwork stating that artwork is in progress
+      $sql = "INSERT INTO artwork_table(OrderNumber, Artwork_Status) VALUES('$OrderNumber','In Progress')";
+      if (mysqli_query($conn, $sql)){
+        header('Location: vieworder.php');
+      }else{
+				//error
+        echo 'query error: ' . mysqli_error($conn);
+      }
+  	} else {
+			//error
+    	echo 'query error: ' . mysqli_error($conn);
+  	}
+  }
 
-    if(isset($_GET['approve'])) {
-        $OrderNumber = mysqli_real_escape_string($conn, $_GET['approve']);
-        $sql = "UPDATE order_table SET OrderStatus = 'Approved' WHERE OrderNumber = $OrderNumber";
-        if (mysqli_query($conn, $sql)) {
-            //success
-            //will also create an entry into artwork stating that artwork is in progress
-            $sql = "INSERT INTO artwork_table(OrderNumber, Artwork_Status) VALUES('$OrderNumber','In Progress')";
-            if (mysqli_query($conn, $sql)){
+	if(isset($_GET['reject'])) {
+      $OrderNumber = mysqli_real_escape_string($conn, $_GET['reject']);
+      $sql = "UPDATE order_table SET OrderStatus = 'Rejected' WHERE OrderNumber = $OrderNumber";
+      if (mysqli_query($conn, $sql)) {
+        //success
+        header('Location: vieworder.php');
+      } else {
+      	//error
+        echo 'query error: ' . mysqli_error($conn);
+      }
+	}
 
-                header('Location: vieworder.php');
-            }else{
+    if(isset($_GET['design'])) {
+		// get designer sin
+		$sin = $user['SIN'];
+		// wanna make sure its the right order, so get that
+        $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
+		// specify file: Here is error for whatever reason
+		//echo $_FILES['image'];
+		if(isset($_FILES['image'])){
+			$image = $_FILES['image']['name'];
+			// image file directory
+			$target = '\images/' . basename($image);
+			echo $target;
+            echo "<br>";
+			// update the artwork table - but it never works? Query error apparently
+            $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath='$target' WHERE OrderNumber = $OrderNumber";
+            echo $sql . "<br>";
+            if (mysqli_query($conn, $sql)) {
+                //echo "success";
+                // move the file now and everything fails in here..
+                echo SITE_ROOT . $target;
+                move_uploaded_file(($_FILES['image']['tmp_name']), SITE_ROOT . $target);
+
+                $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
+                
+                if (mysqli_query($conn, $sql)){
+                    header('Location: vieworder.php');
+                }else{
+                    //error
+                    echo 'query error: ' . mysqli_error($conn);
+                }
+
+            } else {
                 //error
                 echo 'query error: ' . mysqli_error($conn);
             }
-        } else {
-            //error
-            echo 'query error: ' . mysqli_error($conn);
-        }
-    }
 
-    if(isset($_GET['reject'])) {
-        $OrderNumber = mysqli_real_escape_string($conn, $_GET['reject']);
-        $sql = "UPDATE order_table SET OrderStatus = 'Rejected' WHERE OrderNumber = $OrderNumber";
-        if (mysqli_query($conn, $sql)) {
-            //success
-            header('Location: vieworder.php');
-        } else {
-        //error
-            echo 'query error: ' . mysqli_error($conn);
-        }
-}
-    if(isset($_GET['design'])) {
-			 	$sin = $user['SIN'];
-				$msg="";
-        $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
-				$image = $_FILES['image']['name'];
-				// image file directory
-				$target = "images/".basename($image);
-
-        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath=$target WHERE OrderNumber = $OrderNumber";
-        if (mysqli_query($conn, $sql)) {
-            //success
-
-						if (move_uploaded_file($image, $target)) {
-							$msg = "Image uploaded successfully";
-						}else{
-							$msg = "Failed to upload image";
-						}
-				}
-				$result = mysqli_query($conn, "SELECT * FROM artwork_table");
-
-        $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
-
-        if (mysqli_query($conn, $sql)){
-            header('Location: vieworder.php');
-        }else{
-            //error
-            echo 'query error: ' . mysqli_error($conn);
         }
     } else {
         //error
         echo 'query error: ' . mysqli_error($conn);
     }
+
+
 
     if(isset($_GET['prepared'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['prepared']);
@@ -98,6 +110,7 @@
 
 		//make sql
 		$sql = "SELECT * FROM order_table WHERE OrderNumber=$OrderNumber";
+
 		//get the query result
 		$result = mysqli_query($conn, $sql);
 		//fetch result in array format
@@ -106,6 +119,7 @@
 
 		$msin = $status['M_SIN'];
 		$sql = "SELECT * FROM person_table WHERE SIN = $msin";
+<<<<<<< HEAD
         $result = mysqli_query($conn, $sql);
         //fetch result in array format
         $manager = mysqli_fetch_assoc($result);
@@ -130,6 +144,28 @@
 
 
 
+=======
+    $result = mysqli_query($conn, $sql);
+    //fetch result in array format
+    $manager = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    $orderNumber = $status['OrderNumber'];
+    $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
+    $art = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($art);
+
+    $orderNumber = $status['OrderNumber'];
+    $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
+    $data = mysqli_query($conn, $sql);
+    $installation = "";
+    if(mysqli_num_rows($data) > 0){
+      $installation = "Yes";
+    }else{
+      $installation = "No";
+    }
+    mysqli_close($conn);
+>>>>>>> pan_branch
 	}
  ?>
 
@@ -213,6 +249,7 @@
 		      echo "</div>";
 		    }
 		  ?>
+<<<<<<< HEAD
 		  <form method="POST" enctype="multipart/form-data">
 		  	<input type="hidden" name="size" value="1000000">
 		  	<div>
@@ -220,10 +257,23 @@
 		  	</div>
 		  </form>
         <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
+=======
+		  <form method="POST" action="orderstatus.php?design=<?php echo $status['OrderNumber'];?>" enctype="multipart/form-data" >
+		  	<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+		  	<div>
+		  	  <input type="file" name="image"><br><br>
+              
+              <input type="submit" name="design" value="Submit Designs" class = "green btn btn-info">
+		  	</div>
+		  </form>
+        <!--<a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>-->
+>>>>>>> pan_branch
     <?php endif;?>
+
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
         <a href="orderstatus.php?prepared=<?php echo $status['OrderNumber']?>" name = "prepared" value = "prepared" class = "green btn btn-info">Mark Order As Prepared</a>
     <?php endif;?>
+
     <?php if($status['OrderStatus'] == "Order Prepared" and $user['PersonType'] == 'Manager'): ?>
         <a href="orderstatus.php?complete=<?php echo $status['OrderNumber']?>" name = "complete" value = "complete" class = "green btn btn-info">Complete Order</a>
     <?php endif;?>

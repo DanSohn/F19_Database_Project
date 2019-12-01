@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2019 at 09:02 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Dec 01, 2019 at 11:55 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,8 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `order_tracker`
 --
-CREATE DATABASE order_tracker;
-USE order_tracker;
+
 -- --------------------------------------------------------
 
 --
@@ -42,8 +41,10 @@ CREATE TABLE `artwork_table` (
 
 INSERT INTO `artwork_table` (`D_SIN`, `ImagePath`, `OrderNumber`, `Artwork_Status`) VALUES
 (200000000, '', 200000, 'In Progress'),
-(200000000, '', 200005, 'Completed'),
-(200000000, '', 200008, 'Completed');
+(200000000, 'imagesa5fd3ac5-a9ee-4beb-b123-dd49b8b28a44.jpg', 200005, 'Completed'),
+(200000000, 'images/6231463463.png', 200008, 'Completed'),
+(200000000, 'images/30581413_1206492946152090_7765716731376435200_n.png', 200011, 'Completed'),
+(200000000, 'images/meeeeeee.jpg', 200012, 'Completed');
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,8 @@ INSERT INTO `installation_table` (`E_SIN`, `Location`, `Substrate`, `Status`, `O
 (300000000, 'Calgary', 'Wall', 'Requested', 200003),
 (300000000, 'Calgary', 'steel', 'Complete', 200006),
 (300000000, 'client city', 'Table', 'Requested', 200008),
-(300000000, 'client city', 'Wall', 'Requested', 200009);
+(300000000, 'client city', 'Wall', 'Requested', 200009),
+(300000000, 'client city', 'Window', 'Complete', 200012);
 
 -- --------------------------------------------------------
 
@@ -175,11 +177,13 @@ INSERT INTO `order_table` (`OrderNumber`, `Cost`, `Quantity`, `CreatedDate`, `le
 (200002, 400, 10, '2019-11-23', 30, 15, 100000000, 'Design Complete', 999999999),
 (200003, 500, 1, '2019-11-23', 40, 20, 100000000, 'Order Prepared', 999999999),
 (200004, 1000, 2, '2019-11-15', 50, 25, 100000000, 'Design Complete', 999999999),
-(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Design Complete', 999999999),
+(200005, 2000, 15, '2019-11-10', 12, 6, 100000000, 'Approved', 999999999),
 (200006, 3000, 30, '2019-11-19', 100, 5, 100000000, 'Order Prepared', 999999999),
 (200008, 160, 4, '2019-11-30', 5, 8, 100000000, 'Design Complete', 999999999),
 (200009, 1000, 10, '2019-11-30', 10, 10, 100000000, 'Design Complete', 999999999),
-(200010, 576, 16, '2019-11-30', 12, 3, 100000000, 'Rejected', 999999999);
+(200010, 576, 16, '2019-11-30', 12, 3, 100000000, 'Rejected', 999999999),
+(200011, 12, 2, '2019-12-01', 2, 3, 100000000, 'Design Complete', 999999999),
+(200012, 108, 3, '2019-12-01', 9, 4, 100000000, 'Completed', 999999999);
 
 -- --------------------------------------------------------
 
@@ -389,7 +393,7 @@ ALTER TABLE `invoice_table`
 -- AUTO_INCREMENT for table `order_table`
 --
 ALTER TABLE `order_table`
-  MODIFY `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200011;
+  MODIFY `OrderNumber` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200013;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

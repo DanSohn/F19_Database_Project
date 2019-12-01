@@ -17,7 +17,8 @@
     }
     if(isset($_GET['Mark'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['Mark']);
-        $sql = "UPDATE installation_table SET status = 'Completed' WHERE OrderNumber = $OrderNumber";
+        $sql = "UPDATE installation_table SET status = 'Complete' WHERE OrderNumber = $OrderNumber";
+
         if (mysqli_query($conn, $sql)) {
             //success
             header('Location: viewinstallation.php');
