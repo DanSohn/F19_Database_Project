@@ -13,7 +13,7 @@
             //will also create an entry into artwork stating that artwork is in progress
             $sql = "INSERT INTO artwork_table(OrderNumber, Artwork_Status) VALUES('$OrderNumber','In Progress')";
             if (mysqli_query($conn, $sql)){
-                
+
                 header('Location: vieworder.php');
             }else{
                 //error
@@ -37,37 +37,36 @@
         }
 }
     if(isset($_GET['design'])) {
+			 	$sin = $user['SIN'];
+				$msg="";
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['design']);
-        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin WHERE OrderNumber = $OrderNumber";
+				$image = $_FILES['image']['name'];
+				// image file directory
+				$target = "images/".basename($image);
+				//$sql = "INSERT INTO artwork_table VALUES ('$sin','$image','$OrderNumber','Complete')";
+        $sql = "UPDATE artwork_table SET Artwork_Status = 'Completed', D_SIN = $sin, ImagePath=$image WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
-            ////////////////////////////////////// HOW TO PASS USER SIN TO HERE????? /////////////////////////////
-            
-            
-            
-            
-            
-            
-            
-            //help
-            
-            
-            
-            
-            
-            //
-            $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
-            
-            if (mysqli_query($conn, $sql)){
-                header('Location: vieworder.php');
-            }else{
-                //error
-                echo 'query error: ' . mysqli_error($conn);
-            }
-        } else {
+
+						if (move_uploaded_file($image, $target)) {
+							$msg = "Image uploaded successfully";
+						}else{
+							$msg = "Failed to upload image";
+						}
+				}
+				$result = mysqli_query($conn, "SELECT * FROM artwork_table");
+
+        $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
+
+        if (mysqli_query($conn, $sql)){
+            header('Location: vieworder.php');
+        }else{
             //error
             echo 'query error: ' . mysqli_error($conn);
         }
+    } else {
+        //error
+        echo 'query error: ' . mysqli_error($conn);
     }
 
     if(isset($_GET['prepared'])) {
@@ -165,12 +164,6 @@
                 </tr>
         </table>
 
-        <h5>Design:</h5>
-            <div id = 'img_div'>
-                <img src="<?php echo htmlspecialchars($row['Path']);?>">
-                <p><?php echo htmlspecialchars($row['DesignName']);?></p>
-            </div>
-
         <h5>Installation?</h5>
         <h6><?php echo htmlspecialchars($installation);?></h6>
 
@@ -192,6 +185,12 @@
             </tr>
         </table>
 
+				<h5>Design:</h5>
+            <div id = 'img_div'>
+                <img src="<?php echo htmlspecialchars($row['Path']);?>">
+                <p><?php echo htmlspecialchars($row['DesignName']);?></p>
+            </div>
+
 	<?php else: ?>
 		<h5>No such order exists.</h5>
 
@@ -200,7 +199,22 @@
         <a href="orderstatus.php?approve=<?php echo $status['OrderNumber']?>" name = "approve" value = "approve" class = "green btn btn-info">Approve</a>
         <a href="orderstatus.php?reject=<?php echo $status['OrderNumber']?>" name = "reject" value = "reject" class = " red btn btn-info">Reject</a>
     <?php endif;?>
+
     <?php if($status['OrderStatus'] == "Approved" and $user['PersonType'] == 'Designer'): ?>
+			<?php
+		    while ($row = mysqli_fetch_array($result)) {
+		      echo "<div id='img_div'>";
+		      	echo "<img src='images/".$row['image']."' >";
+		      	echo "<p>".$row['image_text']."</p>";
+		      echo "</div>";
+		    }
+		  ?>
+		  <form method="POST" enctype="multipart/form-data">
+		  	<input type="hidden" name="size" value="1000000">
+		  	<div>
+		  	  <input type="file" name="image">
+		  	</div>
+		  </form>
         <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
     <?php endif;?>
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>

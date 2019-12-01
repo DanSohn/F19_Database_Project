@@ -31,7 +31,7 @@ USE order_tracker;
 
 CREATE TABLE `artwork_table` (
   `D_SIN` int(9) UNSIGNED NOT NULL,
-  `Path` varchar(255) NOT NULL,
+  `ImagePath` varchar(255) NOT NULL,
   `OrderNumber` int(6) UNSIGNED NOT NULL,
   `Artwork_Status` enum('In Progress','Completed') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,7 +40,7 @@ CREATE TABLE `artwork_table` (
 -- Dumping data for table `artwork_table`
 --
 
-INSERT INTO `artwork_table` (`D_SIN`, `Path`, `OrderNumber`, `Artwork_Status`) VALUES
+INSERT INTO `artwork_table` (`D_SIN`, `ImagePath`, `OrderNumber`, `Artwork_Status`) VALUES
 (200000000, '', 200000, 'In Progress'),
 (200000000, '', 200005, 'Completed'),
 (200000000, '', 200008, 'Completed');

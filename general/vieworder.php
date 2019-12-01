@@ -33,8 +33,9 @@
 <?php  include('templates/header.php');?>
 <?php  include('config/cookies.php');?>
 
-<h4 class="center grey-text">Requested Orders</h4>
-<div class="row justify-content-center yellow lighten-3 z-depth-2" style ="width:1040px;">
+<?php if($user['PersonType']=='Manager'):?>
+  <h4 class="center grey-text">Requested Orders</h4>
+  <div class="row justify-content-center yellow lighten-3 z-depth-2" style ="width:1040px;">
     <table class = "table">
         <thread>
             <tr>
@@ -55,7 +56,8 @@
             <?php endif; ?>
         <?php endforeach; ?>
     </table>
-</div>
+  </div>
+  <?php endif;?>
 
 <?php if($user['PersonType'] == "Client"):?>
     <h4 class="center grey-text">Orders in Progress</h4>
@@ -97,9 +99,9 @@
                     <tr>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
-                        <td class = "center">
+                          <td class = "center">
                             <a href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
-                        </td>
+                          </td>
                     </tr>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -155,6 +157,7 @@
     </div>
 <?php endif;?>
 
+<?php if($user['PersonType']=='Manager'):?>
 <h4 class="center grey-text">Rejected Orders</h4>
 <div class="row justify-content-center red lighten-3 z-depth-2" style ="width:1040px;">
     <table class = "table">
@@ -178,6 +181,7 @@
         <?php endforeach; ?>
     </table>
 </div>
+<?php endif;?>
 
 <h4 class="center grey-text">Completed Orders</h4>
 <div class="row justify-content-center grey lighten-3 z-depth-2" style ="width:1040px;">
