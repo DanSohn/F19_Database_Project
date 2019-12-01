@@ -13,9 +13,12 @@
 	if (isset($_POST['installations'])){
 		header('Location: viewinstallation.php');
 	}
-if (isset($_POST['supplies'])){
+	if (isset($_POST['supplies'])){
     header('Location: supplies.php');
-}
+	}
+	if (isset($_POST['clients'])){
+    header('Location: viewclients.php');
+	}
 
  ?>
 
@@ -50,6 +53,11 @@ if (isset($_POST['supplies'])){
             <br><div class="center">
                 <?php if ($user['PersonType'] == "Manager") :?>
                     <input type="submit" name="supplies" value = "Order Supplies" class= "btn brand z-depth-1" style = "width:300px; height:150px">
+                <?php endif; ?>
+            </div>
+						<br> <div class="center">
+                <?php if ($user['PersonType'] == "Manager") :?>
+                    <input type="submit" name="clients" value = "view clients" class= "btn brand z-depth-1" style = "width:300px; height:150px">
                 <?php endif; ?>
             </div>
         </div>
