@@ -6,7 +6,7 @@
 
     if(isset($_GET['Request'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['Request']);
-        $sql = "UPDATE installation_table SET status = 'Installation Requested' WHERE OrderNumber = $OrderNumber";
+        $sql = "UPDATE installation_table SET status = 'Requested' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             header('Location: viewinstallation.php');
@@ -17,7 +17,7 @@
     }
     if(isset($_GET['Mark'])) {
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['Mark']);
-        $sql = "UPDATE installation_table SET status = 'Installation Completed' WHERE OrderNumber = $OrderNumber";
+        $sql = "UPDATE installation_table SET status = 'Completed' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
             //success
             header('Location: viewinstallation.php');
@@ -76,7 +76,7 @@
                   <td class = "center">
                       <?php if (($one['Status'] == 'in progress') and ($user['PersonType']=='Client')): ?>
                           <a href="viewinstallation.php?Request=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Request</a>
-                      <?php elseif (($one['Status'] == 'in progress') and ($user['PersonType']=='Employee')): ?>
+                      <?php elseif ((($one['Status'] == 'in progress')or($one['Status'] == 'Requested')) and ($user['PersonType']=='Employee')): ?>
                           <a href="viewinstallation.php?Mark=<?php echo $one['OrderNumber']?>" class = "btn btn-info">Mark as Complete</a>
                       <?php endif; ?>
                   </td>
