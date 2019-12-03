@@ -274,7 +274,7 @@ CREATE TABLE `supplier_table` (
 
 INSERT INTO `supplier_table` (`name`, `location`, `Website`, `Phone Number`) VALUES
 ('Dans Supplies', 'Toronto', 'dansohn.github.io', 1000001258),
-('Supplier Inc.', 'Calgary', '', 0);
+('Supplier Inc.', 'Calgary', 'facebook.com/nkggraphics', 1234567890);
 
 -- --------------------------------------------------------
 

@@ -3,8 +3,8 @@
     include('config/db_connect.php');
     include('config/cookies.php');
 
-   $length = $width = $quantity = $detail = $references = $substrate = $success = $installation = "";
-   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'references' => '', 'installation' => '', 'substrate' => '');
+   $length = $width = $quantity = $detail = $substrate = $success = $installation = "";
+   $errors = array('length' => '', 'width' => '', 'quantity' => '', 'detail' => '', 'installation' => '', 'substrate' => '');
 
    if(isset($_POST['request'])) {
        $length = htmlspecialchars($_POST['length']);
@@ -13,7 +13,6 @@
        $installation = htmlspecialchars($_POST['installation']);
        $substrate = htmlspecialchars($_POST['substrate']);
        $detail = htmlspecialchars($_POST['detail']);
-       $references = htmlspecialchars($_POST['references']);
 
        if ($length == "0") {
            $errors['length'] = 'Please specify a length. <br />';
@@ -51,7 +50,7 @@
 
            if (mysqli_query($conn, $sql)) {
                $success = "Your order request has been sent! A manager may contact you for further details.";
-               $length = $width = $quantity = $detail = $references = "";
+               $length = $width = $quantity = $detail = "";
            }
            if ($installation == 'Yes') {
                $sql = "SELECT OrderNumber FROM order_table ORDER BY OrderNumber DESC LIMIT 1";
@@ -129,11 +128,6 @@
          <label>Details:</label>
             <textarea type = "text" name = "detail" value = "<?php echo $detail?>"placeholder="Provide details about the design..." tabindex="5"></textarea>
             <div class="red-text"><?php echo $errors['detail'];?></div>
-
-         <label>Attach references you may have:</label>
-         <div class="attachment-row">
-            <input type="file" class="input-field" name="references">
-         </div>
 
          <div class="center">
             <input type="submit" name="request" value = "request" class= "btn brand z-depth-1">

@@ -87,6 +87,7 @@ include('config/cookies.php');
                 <tr>
                     <th class = "center">Supplier Name</th>
                     <th class = "center">Location</th>
+                    <th class = "center">Website</th>
                 </tr>
             </thread>
         <tbody>
@@ -98,7 +99,7 @@ include('config/cookies.php');
             $brand = $_POST['brand'];
 
             if($size != "" || $color != "" || $durability != "" || $brand != ""){
-                $query = "SELECT name, location FROM supplier_table, supply_table WHERE name = SupplierName AND
+                $query = "SELECT name, location, Website FROM supplier_table, supply_table WHERE name = SupplierName AND
                             size = '$size' OR color = '$color' OR durability = '$durability' OR brand = '$brand' GROUP BY name";
 
                 $data = mysqli_query($conn, $query) or die('error');
@@ -106,10 +107,12 @@ include('config/cookies.php');
                     foreach($data as $row){
                         $supplier = $row['name'];
                         $location = $row['location'];
+                        $website = $row['Website'];
                     ?>
                     <tr>
                         <td class="center"><?php echo $supplier; ?></td>
                         <td class = "center"><?php echo $location; ?></td>
+                        <td class = "center"><?php echo $website; ?></td>
                     </tr>
                     <?php
                     }

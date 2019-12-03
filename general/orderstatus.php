@@ -109,7 +109,7 @@
 		$OrderNumber = mysqli_real_escape_string($conn, $_GET['OrderNumber']);
 
 		//make sql
-		$sql = "SELECT * FROM order_table WHERE OrderNumber=$OrderNumber";
+		$sql = "SELECT * FROM order_table WHERE OrderNumber='$OrderNumber'";
 
 		//get the query result
 		$result = mysqli_query($conn, $sql);
@@ -118,15 +118,15 @@
 		mysqli_free_result($result);
 
 		$msin = $status['M_SIN'];
-		$sql = "SELECT * FROM person_table WHERE SIN = $msin";
-<<<<<<< HEAD
+		$sql = "SELECT * FROM person_table WHERE SIN = '$msin'";
+
         $result = mysqli_query($conn, $sql);
         //fetch result in array format
         $manager = mysqli_fetch_assoc($result);
         mysqli_free_result($result);
 
        $orderNumber = $status['OrderNumber'];
-        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
+        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='$orderNumber'";
         $art = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($art);
 
@@ -144,7 +144,7 @@
 
 
 
-=======
+
     $result = mysqli_query($conn, $sql);
     //fetch result in array format
     $manager = mysqli_fetch_assoc($result);
@@ -165,7 +165,7 @@
       $installation = "No";
     }
     mysqli_close($conn);
->>>>>>> pan_branch
+
 	}
  ?>
 
@@ -249,7 +249,7 @@
 		      echo "</div>";
 		    }
 		  ?>
-<<<<<<< HEAD
+
 		  <form method="POST" enctype="multipart/form-data">
 		  	<input type="hidden" name="size" value="1000000">
 		  	<div>
@@ -257,7 +257,7 @@
 		  	</div>
 		  </form>
         <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
-=======
+
 		  <form method="POST" action="orderstatus.php?design=<?php echo $status['OrderNumber'];?>" enctype="multipart/form-data" >
 		  	<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 		  	<div>
@@ -267,7 +267,7 @@
 		  	</div>
 		  </form>
         <!--<a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>-->
->>>>>>> pan_branch
+
     <?php endif;?>
 
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
