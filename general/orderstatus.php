@@ -86,7 +86,7 @@
             $result = mysqli_query($conn, $sql);
             $order = mysqli_fetch_assoc($result);
             $cost = $order['Cost'];
-            $client = $user['SIN'];
+            $client = $order['Client_SIN'];
             $sql = "INSERT INTO invoice_table (cost,C_SIN, OrderNumber) VALUES ('$cost','$client','$orderNum')";
             mysqli_query($conn, $sql);
             header('Location: vieworder.php');
