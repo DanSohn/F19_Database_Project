@@ -6,6 +6,7 @@
        $sql = "SELECT * FROM invoice_table WHERE InvoiceNumber = $InvoiceNumber";
        $result = mysqli_query($conn, $sql);
        $invoice = mysqli_fetch_assoc($result);
+       $invoiceNum = $invoice['InvoiceNumber'];
        mysqli_free_result($result);
 
    }
@@ -13,7 +14,7 @@
    $errors = array('month' => '', 'year' => '', 'card_name' => '', 'card_cvv' => '', 'card_number' => '');
 
    if(isset($_POST['request'])) {
-
+      $InvoiceNumber = htmlspecialchars($_POST['invoiceNumber']);
       $month = htmlspecialchars($_POST['month']);
       $year = htmlspecialchars($_POST['year']);
       $card_name = htmlspecialchars($_POST['card_name']);
@@ -46,7 +47,6 @@
          $card_number = mysqli_real_escape_string($conn, $_POST['card_number']);
 
          $status = "Paid";
-         $InvoiceNumber = "100000";
          //$status = mysqli_real_escape_string($status);
 
          //$invoiceNumber = mysqli_real_escape_string($invoiceNumber);
@@ -56,8 +56,14 @@
          $sql = "UPDATE invoice_table SET status = '$status' WHERE InvoiceNumber = '$InvoiceNumber'";
 
          if(mysqli_query($conn, $sql)){
-            $success = "Thank you for paying your invoice!";
-            $length = $width = $quantity = $detail = $references = "";
+             $sql = "SELECT OrderNumber FROM invoice_table WHERE InvoiceNumber = '$InvoiceNumber'";
+             $result = mysqli_query($conn, $sql);
+             $order = mysqli_fetch_assoc($result);
+             mysqli_free_result($result);
+             $orderNum = $order['OrderNumber'];
+             $sql = "UPDATE order_table SET OrderStatus = 'Completed' WHERE OrderNumber = '$orderNum'";
+             mysqli_query($conn, $sql);
+             header('Location: viewinvoice.php');
          }else{
             echo 'query error: '.mysqli_error($conn);
          }
@@ -76,7 +82,8 @@
     <div class="card-action center-align"></div>
       <form class="white z-depth-2" action ="settle_invoice.php" method="POST">
          <h6 class="green-text center-align"><?php echo $success;?></h6>
-         
+          <label>Invoice Number</label>
+         <input type = "text" name = "invoiceNumber" value = "<?php echo $invoiceNum?>" readonly>
          <label>Card Holder Name</label>
             <input type = "text" name = "card_name" value = "<?php echo $card_name?>" placeholder="John M. Doe">
             <div class="red-text"><?php echo $errors['card_name'];?></div>

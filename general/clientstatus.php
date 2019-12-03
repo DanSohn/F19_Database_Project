@@ -38,14 +38,14 @@
       </tr>
     </thread>
       <tr>
-        <td class = "center"><?php echo htmlspecialchars($status['FName']);?>"</td>
-        <td class = "center"><?php echo htmlspecialchars($status['MName']);?>"</td>
+        <td class = "center"><?php echo htmlspecialchars($status['FName']);?></td>
+        <td class = "center"><?php echo htmlspecialchars($status['MName']);?></td>
         <td class = "center"><?php echo htmlspecialchars($status['LName']);?></td>
-        <td class = "center"><?php echo htmlspecialchars($status['PhoneNumber']);?>"</td>
-        <td class = "center"><?php echo htmlspecialchars($status['Email']);?>"</td>
+        <td class = "center"><?php echo htmlspecialchars($status['PhoneNumber']);?></td>
+        <td class = "center"><?php echo htmlspecialchars($status['Email']);?></td>
         <td class = "center"><?php echo htmlspecialchars($status['Address']);?></td>
-        <td class = "center"><?php echo htmlspecialchars($status['City']);?>"</td>
-        <td class = "center"><?php echo htmlspecialchars($status['PostalCode']);?>"</td>
+        <td class = "center"><?php echo htmlspecialchars($status['City']);?></td>
+        <td class = "center"><?php echo htmlspecialchars($status['PostalCode']);?></td>
       </tr>
     </table>
 </div>

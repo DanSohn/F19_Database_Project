@@ -157,7 +157,7 @@
     </div>
 <?php endif;?>
 
-<?php if($user['PersonType']=='Manager'):?>
+<?php if($user['PersonType']=='Manager' || $user['PersonType']=='Client'):?>
 <h4 class="center grey-text">Rejected Orders</h4>
 <div class="row justify-content-center red lighten-3 z-depth-2" style ="width:1040px;">
     <table class = "table">

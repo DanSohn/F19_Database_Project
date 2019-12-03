@@ -81,7 +81,14 @@
         $OrderNumber = mysqli_real_escape_string($conn, $_GET['prepared']);
         $sql = "UPDATE order_table SET OrderStatus = 'Order Prepared' WHERE OrderNumber = $OrderNumber";
         if (mysqli_query($conn, $sql)) {
-            //success
+            $orderNum = $_GET['prepared'];
+            $sql = "SELECT * FROM order_table WHERE OrderNumber = '$orderNum'";
+            $result = mysqli_query($conn, $sql);
+            $order = mysqli_fetch_assoc($result);
+            $cost = $order['Cost'];
+            $client = $user['SIN'];
+            $sql = "INSERT INTO invoice_table (cost,C_SIN, OrderNumber) VALUES ('$cost','$client','$orderNum')";
+            mysqli_query($conn, $sql);
             header('Location: vieworder.php');
         } else {
             //error
@@ -115,30 +122,29 @@
 
 		$msin = $status['M_SIN'];
 		$sql = "SELECT * FROM person_table WHERE SIN = $msin";
-    $result = mysqli_query($conn, $sql);
-    //fetch result in array format
-    $manager = mysqli_fetch_assoc($result);
-    mysqli_free_result($result);
+        $result = mysqli_query($conn, $sql);
+        //fetch result in array format
+        $manager = mysqli_fetch_assoc($result);
+        mysqli_free_result($result);
 
-    $orderNumber = $status['OrderNumber'];
-    $sql = "SELECT * FROM artwork_table WHERE OrderNumber = '$orderNumber'";
-    $art = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_array($art)) {
-      $img_source = $row['ImagePath'];
-      //echo $orderNumber;
-      //echo $img_source;
-    }
+        $orderNumber = $status['OrderNumber'];
+        $sql = "SELECT * FROM artwork_table WHERE OrderNumber = '$orderNumber'";
+        $art = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($art)) {
+            $img_source = $row['ImagePath'];
+        }
 
-    $orderNumber = $status['OrderNumber'];
-    $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
-    $data = mysqli_query($conn, $sql);
-    $installation = "";
-    if(mysqli_num_rows($data) > 0){
-      $installation = "Yes";
-    }else{
-      $installation = "No";
-    }
-    mysqli_close($conn);
+        $orderNumber = $status['OrderNumber'];
+        $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
+        $data = mysqli_query($conn, $sql);
+        $installation = "";
+        if(mysqli_num_rows($data) > 0){
+            $installation = "Yes";
+        }
+        else{
+            $installation = "No";
+        }
+        mysqli_close($conn);
 	}
  ?>
 
@@ -196,10 +202,10 @@
 
 				<h5>Design:</h5>
             <div class= "img-block">
-							<?php if (($status['OrderStatus']=="Requested") || ($status['OrderStatus']=="Approved")):?>
+							<?php if (($status['OrderStatus']=="Requested") || ($status['OrderStatus']=="Approved") || ($status['OrderStatus']=="Rejected")):?>
 								<img src="./NotAvailable.png" style="width=100%">
 							<?php else:?>
-								<img src="<?php echo $img_source ?>" style="width:100%">
+								<img src="<?php echo $img_source ?>" style="width:100%; max-width: 500px">
 							<?php endif;?>
             </div>
 
