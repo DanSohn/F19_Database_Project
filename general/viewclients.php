@@ -45,7 +45,7 @@
                     <td class = "center"><?php echo htmlspecialchars($client['LName']); ?></td>
                     <td class = "center"><?php echo htmlspecialchars($client['PhoneNumber']); ?></td>
                     <td class = "center">
-                        <a href="clientstatus.php?PhoneNumber=<?php echo $client['PhoneNumber']?>" class = "btn btn-info">Details</a>
+                        <a href="clientstatus.php?PhoneNumber=<?php echo $client['PhoneNumber']?>" class = "btn btn-info">More Details</a>
                     </td>
                 </tr>
         <?php endforeach; ?>
