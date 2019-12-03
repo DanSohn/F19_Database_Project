@@ -60,7 +60,7 @@
                 move_uploaded_file(($_FILES['image']['tmp_name']), SITE_ROOT . $target);
 
                 $sql = "UPDATE order_table SET OrderStatus = 'Design Complete' WHERE OrderNumber = $OrderNumber";
-                
+
                 if (mysqli_query($conn, $sql)){
                     header('Location: vieworder.php');
                 }else{
@@ -72,11 +72,7 @@
                 //error
                 echo 'query error: ' . mysqli_error($conn);
             }
-
         }
-    } else {
-        //error
-        echo 'query error: ' . mysqli_error($conn);
     }
 
 
@@ -109,7 +105,7 @@
 		$OrderNumber = mysqli_real_escape_string($conn, $_GET['OrderNumber']);
 
 		//make sql
-		$sql = "SELECT * FROM order_table WHERE OrderNumber='$OrderNumber'";
+		$sql = "SELECT * FROM order_table WHERE OrderNumber=$OrderNumber";
 
 		//get the query result
 		$result = mysqli_query($conn, $sql);
@@ -118,42 +114,20 @@
 		mysqli_free_result($result);
 
 		$msin = $status['M_SIN'];
-		$sql = "SELECT * FROM person_table WHERE SIN = '$msin'";
-
-        $result = mysqli_query($conn, $sql);
-        //fetch result in array format
-        $manager = mysqli_fetch_assoc($result);
-        mysqli_free_result($result);
-
-       $orderNumber = $status['OrderNumber'];
-        $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='$orderNumber'";
-        $art = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_array($art);
-
-        $orderNumber = $status['OrderNumber'];
-        $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
-        $data = mysqli_query($conn, $sql);
-        $installation = "";
-        if(mysqli_num_rows($data) > 0){
-            $installation = "Yes";
-        }
-        else{
-            $installation = "No";
-        }
-        mysqli_close($conn);
-
-
-
-
+		$sql = "SELECT * FROM person_table WHERE SIN = $msin";
     $result = mysqli_query($conn, $sql);
     //fetch result in array format
     $manager = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
 
     $orderNumber = $status['OrderNumber'];
-    $sql = "SELECT * FROM artwork_table WHERE OrderNumber ='orderNumber'";
+    $sql = "SELECT * FROM artwork_table WHERE OrderNumber = '$orderNumber'";
     $art = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($art);
+    while ($row = mysqli_fetch_array($art)) {
+      $img_source = $row['ImagePath'];
+      //echo $orderNumber;
+      //echo $img_source;
+    }
 
     $orderNumber = $status['OrderNumber'];
     $sql = "SELECT * FROM installation_table WHERE OrderNumber = '$orderNumber'";
@@ -165,7 +139,6 @@
       $installation = "No";
     }
     mysqli_close($conn);
-
 	}
  ?>
 
@@ -222,12 +195,11 @@
         </table>
 
 				<h5>Design:</h5>
-            <div id = 'NotAvailable'>
-							<?php if ($status['OrderStatus']!="Design Complete"):?>
+            <div class= "img-block">
+							<?php if (($status['OrderStatus']=="Requested") || ($status['OrderStatus']=="Approved")):?>
 								<img src="./NotAvailable.png" style="width=100%">
-							<?php elseif ($status['OrderNumber']=="Design Complete"):?> {
-								<img src="<?php echo htmlspecialchars($row['Path']);?>">
-                <p><?php echo htmlspecialchars($row['DesignName']);?></p>}
+							<?php else:?>
+								<img src="<?php echo $img_source ?>" style="width:100%">
 							<?php endif;?>
             </div>
 
@@ -249,25 +221,15 @@
 		      echo "</div>";
 		    }
 		  ?>
-
-		  <form method="POST" enctype="multipart/form-data">
-		  	<input type="hidden" name="size" value="1000000">
-		  	<div>
-		  	  <input type="file" name="image">
-		  	</div>
-		  </form>
-        <a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>
-
 		  <form method="POST" action="orderstatus.php?design=<?php echo $status['OrderNumber'];?>" enctype="multipart/form-data" >
 		  	<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 		  	<div>
 		  	  <input type="file" name="image"><br><br>
-              
+
               <input type="submit" name="design" value="Submit Designs" class = "green btn btn-info">
 		  	</div>
 		  </form>
         <!--<a href="orderstatus.php?design=<?php echo $status['OrderNumber']?>" name = "design" value = "design" class = "green btn btn-info">Submit Designs</a>-->
-
     <?php endif;?>
 
     <?php if($status['OrderStatus'] == "Design Complete" and $user['PersonType'] == 'Employee'): ?>
