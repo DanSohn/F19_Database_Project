@@ -60,6 +60,31 @@
   <?php endif;?>
 
 <?php if($user['PersonType'] == "Client"):?>
+    <h4 class="center grey-text">Requested Orders</h4>
+    <div class="row justify-content-center yellow lighten-3 z-depth-2" style ="width:1040px;">
+    <table class = "table">
+        <thread>
+            <tr>
+                <th class = "center">Order Number</th>
+                <th class = "center">Status</th>
+                <th colspan = '2' class ="center">Action</th>
+            </tr>
+        </thread>
+        <?php foreach ($orders as $order):?>
+            <?php if($order['OrderStatus'] == 'Requested'):?>
+                <tr>
+                    <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
+                    <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
+                    <td class = "center">
+                        <a href="orderstatus.php?OrderNumber=<?php echo $order['OrderNumber']?>" class = "btn btn-info">Details</a>
+                    </td>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+    </div>
+  
+  
     <h4 class="center grey-text">Orders in Progress</h4>
     <div class="row justify-content-center green lighten-3 z-depth-2" style ="width:1040px;">
         <table class = "table">
@@ -71,7 +96,7 @@
                 </tr>
             </thread>
             <?php foreach ($orders as $order):?>
-                <?php if(!($order['OrderStatus'] == 'Rejected') || (!$order['OrderStatus'] =='Requested')):?>
+                <?php if(!(($order['OrderStatus'] == 'Rejected') || ($order['OrderStatus'] =='Completed') || ($order['OrderStatus'] == 'Requested'))):?>
                     <tr>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderNumber']); ?></td>
                         <td class = "center"><?php echo htmlspecialchars($order['OrderStatus']); ?></td>
