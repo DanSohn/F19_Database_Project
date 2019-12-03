@@ -179,8 +179,8 @@
                 </tr>
         </table>
 
-        <h5>Installation?</h5>
-        <h6><?php echo htmlspecialchars($installation);?></h6>
+        <h5>Installation Required:</h5>
+        <h6><?php echo htmlspecialchars($installation);?></h6><br>
 
         <h5>Manager On File:</h5>
         <table class = "table">
