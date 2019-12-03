@@ -114,7 +114,7 @@
          <div class="red-text"><?php echo $errors['year'];?></div>
 
          <div class="center">
-            <input type="submit" name="request" value = "request" class= "btn brand z-depth-1">
+            <input type="submit" name="request" value = "Pay Now" class= "btn brand z-depth-1">
          </div>
       </form>
    </section>
