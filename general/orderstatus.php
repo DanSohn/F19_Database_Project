@@ -29,7 +29,8 @@
       $OrderNumber = mysqli_real_escape_string($conn, $_GET['reject']);
       $sql = "UPDATE order_table SET OrderStatus = 'Rejected' WHERE OrderNumber = $OrderNumber";
       if (mysqli_query($conn, $sql)) {
-        //success
+        $sql = "DELETE FROM installation_table WHERE OrderNumber =$OrderNumber";
+        mysqli_query($conn,$sql);
         header('Location: vieworder.php');
       } else {
       	//error
